@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where node:*)",
+      "Bash(where npx:*)",
+      "Bash(where python3:*)",
+      "Bash(where py:*)",
+      "Bash(python3 -c ' *)",
+      "Bash(powershell -Command \"Get-Content 'C:\\\\Users\\\\Osama Qureshi\\\\.claude\\\\projects\\\\D--vania-portfolio\\\\30f7573a-a8b1-4c42-89c1-94390869fa3d.jsonl' -Tail 50 | Select-String 'text' | Select-Object -Last 20\")"
+    ]
+  }
+}

@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vania &mdash; Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500;700&family=Sacramento&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; overflow:hidden; }
+    body {
+      background: radial-gradient(ellipse at 55% 40%, #FBF6EF 0%, #F0E7DA 55%, #E8DACE 100%);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .rose-scene { position:fixed; inset:0; pointer-events:none; overflow:hidden; }
+    .rg { position:absolute; }
+    .rose-svg { display:block; width:100%; height:auto; overflow:visible; }
+    .lw { position:absolute; overflow:visible; }
+    .leaf-svg { display:block; width:100%; height:auto; overflow:visible; }
+
+    @keyframes f1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+    @keyframes f2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    @keyframes f3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    .fa { animation: f1  7.0s ease-in-out infinite }
+    .fb { animation: f2  9.0s ease-in-out infinite 1.2s }
+    .fc { animation: f3  8.2s ease-in-out infinite 0.4s }
+    .fd { animation: f1 10.5s ease-in-out infinite 2.1s }
+    .fe { animation: f2  7.8s ease-in-out infinite 3.0s }
+    .ff { animation: f3  8.8s ease-in-out infinite 1.7s }
+
+    /* ── Real rose image — CSS mask colouriser ─────────────────── */
+    .rose-mk {
+      display:block; width:100%; aspect-ratio:1;
+      -webkit-mask-image: url('no bg 1.png');
+      mask-image: url('no bg 1.png');
+      -webkit-mask-size: contain; mask-size: contain;
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center; mask-position: center;
+    }
+
+    .envelope-wrapper {
+      position:relative; z-index:30;
+      display:flex; flex-direction:column; align-items:center; gap:16px;
+    }
+    .name-text {
+      font-size:clamp(2rem,4.5vw,3.6rem); font-weight:500; font-style:normal;
+      text-transform:uppercase; color:#4B1535; letter-spacing:.28em;
+      opacity:0; animation:fadeDown 1.1s ease forwards .3s;
+    }
+    .env-btn {
+      background:none; border:none; padding:0; cursor:pointer;
+      filter:drop-shadow(0 10px 28px rgba(75,21,53,.18));
+      transition:transform .5s cubic-bezier(.34,1.56,.64,1), filter .4s ease;
+      opacity:0; animation:fadeUp 1.1s ease forwards .7s;
+    }
+    .env-btn:hover {
+      transform:translateY(-10px) rotate(-1.5deg);
+      filter:drop-shadow(0 22px 44px rgba(75,21,53,.28));
+    }
+    .open-label {
+      font-size:.78rem; font-weight:300; letter-spacing:.38em;
+      text-transform:uppercase; color:#71557A;
+      opacity:0; animation:fadeUp 1.1s ease forwards 1.1s;
+    }
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-14px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY( 14px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── Envelope open animation ─────────────────────────────────────── */
+    .envelope-wrapper { position:relative; }
+    .env-btn { position:relative; overflow:visible; }
+    .env-flap {
+      transform-box: fill-box;
+      transform-origin: 50% 0%;
+      transition: transform .75s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+    .env-btn.opening .env-flap {
+      transform: perspective(700px) rotateX(-176deg);
+    }
+    .env-wax {
+      transition: opacity .35s ease .1s;
+    }
+    .env-btn.opening .env-wax { opacity:0; }
+    .env-btn.opening {
+      pointer-events:none;
+      transform:none !important;
+      filter:drop-shadow(0 10px 28px rgba(75,21,53,.18)) !important;
+    }
+
+    /* ── Portfolio page overlay ────────────────────────────────────── */
+    .portfolio-page {
+      position:fixed; inset:0; z-index:200;
+      overflow-y:auto; overflow-x:hidden;
+      background: #f7c2ca; /* fallback while fading in */
+      opacity:0;
+      transform:scale(1.03);
+      transform-origin:50% 44%;
+      pointer-events:none;
+      transition:opacity .65s ease, transform .65s cubic-bezier(.4,0,.2,1);
+    }
+    .portfolio-page.is-open {
+      opacity:1;
+      transform:scale(1);
+      pointer-events:auto;
+    }
+
+    /* Gradient content wrapper — spans full scroll height */
+    .port-bg-wrap {
+      min-height:100%;
+      background: linear-gradient(to bottom,
+        #f7c2ca 0%, #f6a5c0 18%, #cc8db3 38%,
+        #9d85b6 62%, #837ab6 78%, #250e2c 100%);
+    }
+
+    /* Back button */
+    .port-back {
+      position:fixed; top:28px; left:32px; z-index:210;
+      background:none; border:1.2px solid rgba(37,14,44,.3);
+      color:#250e2c; font-family:'Cinzel',serif;
+      font-size:.92rem; letter-spacing:.3em; text-transform:uppercase;
+      padding:9px 22px; cursor:pointer; border-radius:2px;
+      opacity:0; transition:opacity .5s ease .7s, background .22s, color .22s;
+    }
+    .portfolio-page.is-open .port-back { opacity:1; }
+    .port-back:hover { background:#250e2c; color:#f7c2ca; }
+
+    /* ── Light-text override for dark gradient sections ─────────── */
+    .port-section-lt .port-label   { color:#f6a5c0; }
+    .port-section-lt .port-heading { color:#f7c2ca; }
+    .port-section-lt .port-body    { color:rgba(247,194,202,.92); }
+    .port-section-lt .port-tdate   { color:#cc8db3; }
+    .port-section-lt .port-tname   { color:#f7c2ca; }
+    .port-section-lt .port-torg    { color:#cc8db3; }
+    .port-section-lt .port-tdesc   { color:rgba(247,194,202,.88); }
+    .port-section-lt .port-timeline::before { background:linear-gradient(to bottom,#cc8db3,rgba(204,141,179,.1)); }
+    .port-section-lt .port-titem::before    { background:#f6a5c0; border-color:rgba(37,14,44,.5); box-shadow:0 0 0 1px #f6a5c0; }
+    .port-section-lt .port-pill   { color:#f7c2ca; border-color:rgba(247,194,202,.3); }
+    .port-section-lt .port-pill:hover { background:rgba(247,194,202,.18); color:#f7c2ca; }
+    .port-section-lt .port-skill  { color:#f6a5c0; border-color:rgba(246,165,192,.3); }
+    .port-section-lt .port-skill:hover { background:#f7c2ca; color:#250e2c; border-color:#f7c2ca; }
+    .port-section-lt .port-card   { background:rgba(255,255,255,.08); border-color:rgba(240,231,218,.22); color:#F0E7DA; }
+    .port-section-lt .port-card:hover { background:#4B1535; border-color:#4B1535; color:#FBF6EF; box-shadow:0 18px 44px rgba(75,21,53,.55), 0 0 0 2px rgba(75,21,53,.2); }
+    .port-section-lt .port-card:hover .port-card-sub { color:rgba(251,246,239,.72); }
+    .port-section-lt .port-card-sub { color:rgba(240,231,218,.75); }
+    .port-section-lt .port-testimonial { background:rgba(255,255,255,.07); border-color:rgba(246,165,192,.2); border-left-color:#cc8db3; }
+    .port-section-lt .port-testimonial blockquote { color:#f7c2ca; }
+    .port-section-lt .port-testimonial blockquote::before,
+    .port-section-lt .port-testimonial blockquote::after { color:#cc8db3; }
+    .port-section-lt .port-testimonial cite { color:#cc8db3; }
+
+    /* Hero ─────────────────────────────────────────────────────────── */
+    .port-hero {
+      min-height:100vh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      position:relative; overflow:hidden; padding:90px 40px 60px;
+    }
+    .port-hero::before {
+      content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+      background: linear-gradient(to bottom, #F0E7DA 0%, #F2DADE 42%, transparent 68%);
+    }
+    .port-ghost {
+      position:absolute; inset:0; display:flex;
+      align-items:center; justify-content:center;
+      pointer-events:none; user-select:none; overflow:hidden;
+      gap: clamp(175px,25vw,310px);
+    }
+    .port-ghost span {
+      font-family:'Sacramento',cursive;
+      font-size:clamp(42px,11vw,158px); font-weight:400;
+      letter-spacing:.02em; color:#3A345B;
+      -webkit-text-stroke:1.8px #3A345B;
+      white-space:nowrap; line-height:1;
+    }
+    .port-ghost span:first-child { text-align:left; }
+    .port-ghost span:last-child  { text-align:right; }
+    .port-hero-inner {
+      position:relative; z-index:2;
+      display:flex; flex-direction:column; align-items:center;
+    }
+    .port-year {
+      align-self:flex-end; margin-bottom:6px;
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:clamp(1.25rem,2.6vw,1.8rem); font-style:italic;
+      color:#4B1535; letter-spacing:.14em; opacity:0;
+    }
+    .portfolio-page.is-open .port-year { animation:fadeDown .8s ease forwards .85s; }
+    .portfolio-page.is-open .port-name { animation:fadeUp  .9s ease forwards 1.0s;  }
+    .portfolio-page.is-open .port-role { animation:fadeUp  .9s ease forwards 1.15s; }
+    .portfolio-page.is-open .port-rule { animation:fadeUp  .9s ease forwards 1.3s;  }
+
+    .port-figure {
+      background: transparent;
+      width: clamp(160px, 22vw, 290px);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .port-figure img {
+      width: 100%; height: auto;
+      object-fit: contain; display: block;
+      filter: drop-shadow(0 18px 36px rgba(75,21,53,.18));
+    }
+    .port-name {
+      font-family:'Cinzel',serif;
+      font-size:clamp(2.6rem,8vw,7rem); font-weight:500;
+      color:#4B1535; letter-spacing:.38em; line-height:.9;
+      margin-top:16px; text-transform:uppercase; opacity:0;
+    }
+    .port-role {
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:clamp(1.15rem,2.2vw,1.55rem); font-style:italic;
+      color:#71557A; letter-spacing:.3em; margin-top:10px; opacity:0;
+    }
+    .port-rule {
+      width:64px; height:1px; margin:24px auto 0;
+      background:linear-gradient(to right,transparent,#4B1535,transparent); opacity:0;
+    }
+    /* rose accents flanking hero */
+    .port-rose-l,.port-rose-r {
+      position:absolute; pointer-events:none; opacity:.35;
+    }
+    .port-rose-l { left:-2vw; top:8%;  width:clamp(65px,9vw,130px); }
+    .port-rose-r { right:-2vw; top:42%; width:clamp(55px,8vw,115px); }
+
+    /* Sections ──────────────────────────────────────────────────── */
+    .port-section {
+      padding:80px 96px;
+    }
+    .port-label {
+      font-family:'Cinzel',serif; font-size:.91rem;
+      letter-spacing:.45em; text-transform:uppercase;
+      color:#4B1535; margin-bottom:12px; display:block;
+    }
+    .port-heading {
+      font-family:'Cinzel',serif;
+      font-size:clamp(1.75rem,4vw,3.05rem); font-weight:500;
+      color:#4B1535; letter-spacing:.05em; margin-bottom:22px;
+    }
+    .port-body {
+      font-size:clamp(1.23rem,1.75vw,1.37rem); line-height:1.95;
+      color:#3A1028; font-weight:400;
+    }
+    .port-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:22px; margin-top:36px;
+    }
+    .port-card {
+      height:clamp(195px,19vw,250px);
+      border-radius:12px;
+      background:linear-gradient(135deg,#EDE2D4 0%,#DDD0BE 100%);
+      border:1px solid #D0C0A8;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:10px;
+      padding:24px 20px; text-align:center; overflow:hidden;
+      font-family:'Cinzel',serif; font-size:.88rem;
+      letter-spacing:.26em; color:rgba(75,21,53,.65);
+      text-transform:uppercase; cursor:default;
+      transition:transform .32s ease, box-shadow .32s ease,
+                 background .28s ease, border-color .28s ease, color .28s ease;
+    }
+    .port-card:hover {
+      transform:translateY(-7px) scale(1.02);
+      background:#4B1535;
+      border-color:#4B1535;
+      box-shadow:0 18px 44px rgba(75,21,53,.48), 0 0 0 2px rgba(75,21,53,.15);
+      color:#FBF6EF;
+    }
+    .port-card:hover .port-card-icon { opacity:1; }
+    .port-card:hover .port-card-sub { color:rgba(251,246,239,.72); }
+    .port-card-icon { font-size:1.5rem; opacity:.58; }
+    .port-card-sub {
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:1rem; font-style:italic; font-weight:400;
+      letter-spacing:.1em; color:rgba(75,21,53,.68);
+      text-transform:none; margin-top:2px;
+    }
+
+    /* Services grouped layout */
+    .port-services { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+    .port-svc-group { margin-top:28px; }
+    .port-svc-group + .port-svc-group { margin-top:24px; }
+    .port-svc-label {
+      font-family:'Cinzel',serif; font-size:.7rem;
+      letter-spacing:.35em; text-transform:uppercase;
+      color:#4B1535; opacity:.5; margin-bottom:0;
+    }
+    .port-section-lt .port-svc-label { color:#f6a5c0; opacity:.65; }
+
+    .port-pill {
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:1.12rem; font-style:italic;
+      color:#4B1535; letter-spacing:.1em;
+      border:1px solid rgba(75,21,53,.22);
+      border-radius:100px; padding:7px 18px;
+      transition:background .22s, color .22s;
+    }
+    .port-pill:hover { background:#4B1535; color:#FBF6EF; }
+
+    /* Grouped service cards */
+    .port-svc-group { margin-top:36px; }
+    .port-svc-group + .port-svc-group { margin-top:32px; }
+    .port-svc-label {
+      font-family:'Cinzel',serif; font-size:.72rem;
+      letter-spacing:.38em; text-transform:uppercase;
+      color:#4B1535; opacity:.55; margin-bottom:14px;
+    }
+    .port-svc-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+    }
+    .port-svc-card {
+      border-radius:10px;
+      background:linear-gradient(135deg,#EDE2D4 0%,#DDD0BE 100%);
+      border:1px solid #D0C0A8;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:8px; padding:20px 16px; text-align:center;
+      font-family:'Cinzel',serif; font-size:.78rem;
+      letter-spacing:.2em; color:rgba(75,21,53,.7);
+      text-transform:uppercase; cursor:default;
+      min-height:90px;
+      transition:transform .28s ease, box-shadow .28s ease,
+                 background .25s ease, border-color .25s ease, color .25s ease;
+    }
+    .port-svc-card:hover {
+      transform:translateY(-5px) scale(1.02);
+      background:#4B1535; border-color:#4B1535;
+      box-shadow:0 14px 36px rgba(75,21,53,.42);
+      color:#FBF6EF;
+    }
+    .port-svc-icon { font-size:1.2rem; opacity:.6; }
+    .port-svc-card:hover .port-svc-icon { opacity:1; }
+    .port-section-lt .port-svc-label { color:#f6a5c0; opacity:.7; }
+    .port-section-lt .port-svc-card {
+      background:rgba(255,255,255,.08); border-color:rgba(247,194,202,.18);
+      color:rgba(247,194,202,.8);
+    }
+    .port-section-lt .port-svc-card:hover {
+      background:#4B1535; border-color:#4B1535; color:#FBF6EF;
+      box-shadow:0 14px 36px rgba(75,21,53,.5);
+    }
+
+    /* Timeline */
+    .port-timeline { margin-top:32px; position:relative; padding-left:24px; }
+    .port-timeline::before {
+      content:''; position:absolute; left:0; top:8px; bottom:8px;
+      width:1px; background:linear-gradient(to bottom,#4B1535,rgba(75,21,53,.1));
+    }
+    .port-titem { position:relative; margin-bottom:32px; }
+    .port-titem::before {
+      content:''; position:absolute; left:-28px; top:7px;
+      width:8px; height:8px; border-radius:50%;
+      background:#4B1535; border:2px solid #FBF6EF;
+      box-shadow:0 0 0 1px #4B1535;
+    }
+    .port-tdate {
+      font-family:'EB Garamond',Georgia,serif;
+      font-size:1rem; font-style:italic; color:#4B1535;
+      letter-spacing:.2em; margin-bottom:6px;
+    }
+    .port-tname {
+      font-family:'Cinzel',serif; font-size:1.25rem;
+      font-weight:700; color:#4B1535; letter-spacing:.06em;
+      margin-bottom:4px;
+    }
+    .port-torg {
+      font-family:'EB Garamond',Georgia,serif;
+      font-size:1.05rem; font-style:italic; color:#4B2060;
+      letter-spacing:.1em; margin-bottom:8px;
+    }
+    .port-tdesc {
+      font-family:'EB Garamond',Georgia,serif;
+      font-size:1.08rem; line-height:1.8; color:rgba(75,21,53,.88);
+      font-weight:400; letter-spacing:.02em;
+    }
+
+    /* Skills tags */
+    .port-skills { display:flex; flex-wrap:wrap; gap:9px; margin-top:26px; }
+    .port-skill {
+      font-family:'Cinzel',serif; font-size:.84rem;
+      letter-spacing:.28em; text-transform:uppercase;
+      color:#71557A; border:1px solid rgba(113,85,122,.3);
+      border-radius:3px; padding:6px 14px;
+      transition:background .22s, color .22s, border-color .22s; cursor:default;
+    }
+    .port-skill:hover { background:#4B1535; color:#FBF6EF; border-color:#4B1535; }
+
+    /* Testimonial */
+    .port-testimonial {
+      margin-top:36px; position:relative;
+      padding:36px 40px 36px 48px;
+      background:linear-gradient(135deg,rgba(251,246,239,.9) 0%,rgba(240,231,218,.6) 100%);
+      border:1px solid rgba(75,21,53,.18);
+      border-left:3px solid #4B1535;
+      border-radius:4px;
+    }
+    .port-testimonial blockquote {
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:clamp(1.3rem,2.05vw,1.52rem); font-style:italic;
+      line-height:1.85; color:#4B1535; font-weight:400;
+      margin:0 0 18px;
+    }
+    .port-testimonial blockquote::before { content:'\201C'; font-size:2.8em; line-height:0; vertical-align:-.55em; color:#4B1535; opacity:.6; margin-right:3px; }
+    .port-testimonial blockquote::after  { content:'\201D'; font-size:2.8em; line-height:0; vertical-align:-.55em; color:#4B1535; opacity:.6; margin-left:3px; }
+    .port-testimonial cite {
+      font-family:'Cinzel',serif; font-size:.9rem;
+      letter-spacing:.38em; text-transform:uppercase;
+      color:#4B1535; font-style:normal;
+    }
+
+    /* Project modal */
+    .proj-overlay {
+      position:fixed; inset:0; z-index:500;
+      background:rgba(37,14,44,.72); backdrop-filter:blur(6px);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none;
+      transition:opacity .3s ease;
+    }
+    .proj-overlay.open { opacity:1; pointer-events:all; }
+    .proj-modal {
+      background:linear-gradient(160deg,#FBF6EF 0%,#F0E7DA 100%);
+      border-radius:14px; width:min(720px,92vw);
+      max-height:90vh; overflow-y:auto;
+      padding:48px 52px 44px;
+      box-shadow:0 32px 80px rgba(37,14,44,.45);
+      transform:translateY(28px) scale(.97);
+      transition:transform .32s ease, opacity .32s ease;
+      opacity:0; position:relative;
+    }
+    .proj-overlay.open .proj-modal { transform:translateY(0) scale(1); opacity:1; }
+    .proj-modal-close {
+      position:absolute; top:20px; right:24px;
+      background:none; border:none; cursor:pointer;
+      font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.25em;
+      color:#4B1535; opacity:.5; text-transform:uppercase; padding:4px 8px;
+    }
+    .proj-modal-close:hover { opacity:1; }
+    .proj-modal-icon { font-size:2.4rem; margin-bottom:14px; display:block; }
+    .proj-modal-type {
+      font-family:'Cinzel',serif; font-size:.68rem; letter-spacing:.35em;
+      text-transform:uppercase; color:#71557A; opacity:.75; margin-bottom:10px;
+    }
+    .proj-modal-title {
+      font-family:'Cinzel',serif; font-size:clamp(1.3rem,3vw,1.8rem);
+      font-weight:700; color:#4B1535; letter-spacing:.04em; margin-bottom:20px;
+    }
+    .proj-modal-desc {
+      font-family:'EB Garamond',Georgia,serif;
+      font-size:1.12rem; line-height:1.85; color:rgba(75,21,53,.85);
+      margin-bottom:24px;
+    }
+    .proj-modal-tags { display:flex; flex-wrap:wrap; gap:8px; }
+    .proj-modal-tag {
+      font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.22em;
+      text-transform:uppercase; color:#4B1535;
+      border:1px solid rgba(75,21,53,.22); border-radius:100px;
+      padding:5px 14px;
+    }
+    .proj-modal-divider {
+      height:1px; background:rgba(75,21,53,.12); margin:24px 0;
+    }
+    .proj-modal-gallery {
+      display:grid; grid-template-columns:repeat(2,1fr);
+      gap:12px; margin-bottom:24px;
+    }
+    .proj-modal-gallery.single { grid-template-columns:1fr; }
+    .proj-modal-gallery.wide   { grid-template-columns:1fr; }
+    .proj-modal-gallery.cols3  { grid-template-columns:repeat(3,1fr); }
+    /* Row-grouped gallery (used when data-images contains || separators) */
+    .proj-gallery-rows { display:flex; flex-direction:column; gap:16px; margin-bottom:24px; }
+    .proj-gallery-row  { display:flex; gap:10px; }
+    .proj-gallery-row > div { flex:1; min-width:0; }
+    .proj-modal-gallery img {
+      width:100%; height:auto; border-radius:8px;
+      border:none;
+      display:block;
+      transition:transform .22s ease, box-shadow .22s ease;
+      cursor:zoom-in;
+    }
+    .proj-modal-gallery.contain img {
+      height:380px; object-fit:contain;
+    }
+    /* Last image spans full row when alone in a 2-col grid (odd total count) */
+    .proj-modal-gallery:not(.cols3) > div:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+    .proj-gallery-row img {
+      width:100%; height:auto; border-radius:8px;
+      border:none;
+      display:block;
+      transition:transform .22s ease, box-shadow .22s ease;
+      cursor:zoom-in;
+    }
+    .proj-modal-gallery img:hover {
+      transform:scale(1.02);
+      box-shadow:0 8px 24px rgba(75,21,53,.18);
+    }
+    .proj-modal-img-label {
+      font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.25em;
+      text-transform:uppercase; color:#4B1535; font-weight:700; opacity:1;
+      text-align:center; margin-top:6px; margin-bottom:16px;
+    }
+
+    /* Let's Work Together button + popup */
+    .port-collab-btn {
+      margin-top:28px; position:relative; z-index:3;
+      font-family:'Cinzel',serif; font-size:.78rem;
+      letter-spacing:.32em; text-transform:uppercase;
+      color:#4B1535; background:rgba(251,246,239,.72);
+      border:1.5px solid rgba(75,21,53,.35);
+      border-radius:100px; padding:13px 34px;
+      cursor:pointer; backdrop-filter:blur(4px);
+      transition:background .25s, color .25s, border-color .25s, box-shadow .25s;
+    }
+    .port-collab-btn:hover {
+      background:#4B1535; color:#FBF6EF;
+      border-color:#4B1535; box-shadow:0 8px 28px rgba(75,21,53,.3);
+    }
+    .port-email-popup {
+      position:absolute; z-index:10;
+      background:linear-gradient(135deg,#FBF6EF 0%,#F0E7DA 100%);
+      border:1px solid rgba(75,21,53,.18); border-radius:10px;
+      padding:18px 28px; text-align:center;
+      box-shadow:0 12px 36px rgba(75,21,53,.22);
+      top:calc(100% + 14px); left:50%; transform:translateX(-50%) scale(.92);
+      opacity:0; pointer-events:none;
+      transition:opacity .22s ease, transform .22s ease;
+      white-space:nowrap;
+    }
+    .port-email-popup.visible {
+      opacity:1; pointer-events:all; transform:translateX(-50%) scale(1);
+    }
+    .port-email-popup-label {
+      display:block; font-family:'Cinzel',serif; font-size:.62rem;
+      letter-spacing:.3em; text-transform:uppercase;
+      color:#71557A; opacity:.7; margin-bottom:8px;
+    }
+    .port-email-popup-addr {
+      font-family:'EB Garamond',Georgia,serif; font-size:1.12rem;
+      font-style:italic; color:#4B1535; letter-spacing:.06em;
+      text-decoration:none; border-bottom:1px solid rgba(75,21,53,.25);
+      padding-bottom:1px; transition:color .2s, border-color .2s;
+    }
+    .port-email-popup-addr:hover { color:#71557A; border-color:#71557A; }
+
+    .port-footer {
+      text-align:center; padding:56px 96px;
+      border-top:1px solid rgba(247,194,202,.15);
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:1.18rem; font-style:italic;
+      color:rgba(247,194,202,.6); letter-spacing:.22em;
+    }
+  </style>
+</head>
+<body>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+
+  <!-- LEAF -->
+  <symbol id="lf" viewBox="0 0 40 82" overflow="visible">
+    <path d="M20,2 C31,16 34,44 20,80 C6,44 9,16 20,2Z" fill="currentColor"/>
+    <line x1="20" y1="2" x2="20" y2="80" stroke="rgba(0,0,0,.13)" stroke-width="1.5"/>
+    <path d="M20,24 C14,36 11,48 10,58 M20,24 C26,36 29,48 30,58"
+          fill="none" stroke="rgba(0,0,0,.08)" stroke-width="1" stroke-linecap="round"/>
+  </symbol>
+
+  <!--
+    ROSE: stencil front-view — filled circle + single continuous spiral bezier
+    drawn as white stroke.  Control points are extreme (far above/below the
+    rose) to produce peaked, organic petal-boundary curves, not arcs.
+
+    Path visits 4 connected waypoints spiralling inward:
+      A (47,153) lower-left outer
+      B (163,83)  upper-right mid   ← arc 1 sweeps OVER the top
+      C (57,112)  left mid          ← arc 2 sweeps UNDER the bottom
+      D (124,114) right inner       ← arc 3 sweeps OVER the top again
+      → (100,97)  centre            ← arc 4 curls to bud
+  -->
+  <symbol id="rose" viewBox="0 0 200 200" overflow="visible">
+    <circle fill="currentColor" cx="100" cy="100" r="80"/>
+    <!-- Continuous spiral: one stroke creates all petal boundaries -->
+    <path fill="none" stroke="rgba(255,255,255,.75)" stroke-width="6"
+          stroke-linecap="round" stroke-linejoin="round"
+          d="M47,153
+             C30,22 170,22 163,83
+             C182,155 88,172 57,112
+             C38,68 105,55 124,114
+             C121,94 107,86 100,97"/>
+    <!-- Centre bud -->
+    <circle fill="rgba(255,255,255,.32)" cx="100" cy="100" r="8"/>
+  </symbol>
+
+ </defs>
+</svg>
+
+
+<div class="rose-scene">
+
+  <!-- TOP-LEFT CLUSTER -->
+  <div class="rg fa" style="left:1vw;top:0vh;width:clamp(110px,11vw,165px)">
+    <div class="rose-mk" style="background:#8B2545;transform:rotate(-15deg)"></div>
+  </div>
+  <div class="rg fb" style="left:12vw;top:0vh;width:clamp(80px,8.5vw,115px)">
+    <div class="rose-mk" style="background:#71557A;transform:rotate(8deg)"></div>
+  </div>
+
+  <!-- TOP CENTRE-LEFT -->
+  <div class="rg fc" style="left:23vw;top:-2vh;width:clamp(160px,16vw,230px)">
+    <div class="rose-mk" style="background:#f6a5c0;transform:rotate(-12deg)"></div>
+  </div>
+  <div class="rg fd" style="left:35vw;top:0vh;width:clamp(40px,5.5vw,80px)">
+    <div class="rose-mk" style="background:#9d85b6"></div>
+  </div>
+
+  <!-- TOP CENTRE-RIGHT -->
+  <div class="rg fb" style="left:62vw;top:-1.5vh;width:clamp(88px,8.5vw,125px)">
+    <div class="rose-mk" style="background:#8B2545;transform:rotate(10deg)"></div>
+  </div>
+
+  <!-- TOP-RIGHT CLUSTER -->
+  <div class="rg fa" style="right:15vw;top:0vh;width:clamp(160px,18vw,260px)">
+    <div class="rose-mk" style="background:#837ab6;transform:rotate(-8deg)"></div>
+  </div>
+  <div class="rg fc" style="right:5vw;top:0vh;width:clamp(84px,8vw,120px)">
+    <div class="rose-mk" style="background:#cc8db3;transform:rotate(5deg)"></div>
+  </div>
+  <div class="rg fe" style="right:0vw;top:8vh;width:clamp(92px,9vw,135px)">
+    <div class="rose-mk" style="background:#71557A;transform:rotate(18deg)"></div>
+  </div>
+
+  <!-- LEFT SIDE -->
+  <div class="rg fc" style="left:-1vw;top:22vh;width:clamp(180px,17vw,250px)">
+    <div class="rose-mk" style="background:#f7c2ca;transform:rotate(-22deg)"></div>
+  </div>
+  <div class="rg fe" style="left:0vw;top:43vh;width:clamp(80px,8.5vw,115px)">
+    <div class="rose-mk" style="background:#cc8db3;transform:rotate(10deg)"></div>
+  </div>
+  <div class="rg fb" style="left:-1vw;top:60vh;width:clamp(102px,10.5vw,155px)">
+    <div class="rose-mk" style="background:#837ab6;transform:rotate(-6deg)"></div>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="rg fd" style="right:-1vw;top:25vh;width:clamp(190px,18vw,270px)">
+    <div class="rose-mk" style="background:#8B2545;transform:rotate(14deg)"></div>
+  </div>
+  <div class="rg fa" style="right:0vw;top:47vh;width:clamp(88px,8.5vw,125px)">
+    <div class="rose-mk" style="background:#9d85b6;transform:rotate(-20deg)"></div>
+  </div>
+  <div class="rg ff" style="right:-1vw;top:65vh;width:clamp(102px,10.5vw,155px)">
+    <div class="rose-mk" style="background:#cc8db3;transform:rotate(6deg)"></div>
+  </div>
+
+  <!-- BOTTOM-LEFT CLUSTER -->
+  <div class="rg fe" style="left:0vw;top:78vh;width:clamp(190px,19vw,280px)">
+    <div class="rose-mk" style="background:#8B2545;transform:rotate(-10deg)"></div>
+  </div>
+  <div class="rg fb" style="left:13vw;top:84vh;width:clamp(88px,8.5vw,125px)">
+    <div class="rose-mk" style="background:#71557A;transform:rotate(12deg)"></div>
+  </div>
+  <div class="rg fc" style="left:24vw;top:80vh;width:clamp(165px,16vw,240px)">
+    <div class="rose-mk" style="background:#f6a5c0;transform:rotate(-4deg)"></div>
+  </div>
+
+  <!-- BOTTOM CENTRE -->
+  <div class="rg fa" style="left:37vw;top:86vh;width:clamp(45px,6.5vw,95px)">
+    <div class="rose-mk" style="background:#9d85b6"></div>
+  </div>
+  <div class="rg fd" style="left:46vw;top:82vh;width:clamp(65px,9vw,130px)">
+    <div class="rose-mk" style="background:#8B2545;transform:rotate(18deg)"></div>
+  </div>
+  <div class="rg ff" style="left:57vw;top:84vh;width:clamp(80px,8.5vw,115px)">
+    <div class="rose-mk" style="background:#cc8db3;transform:rotate(-8deg)"></div>
+  </div>
+
+  <!-- BOTTOM-RIGHT CLUSTER -->
+  <div class="rg fc" style="right:22vw;top:80vh;width:clamp(70px,10vw,145px)">
+    <div class="rose-mk" style="background:#837ab6;transform:rotate(5deg)"></div>
+  </div>
+  <div class="rg fe" style="right:11vw;top:82vh;width:clamp(88px,8.5vw,125px)">
+    <div class="rose-mk" style="background:#f6a5c0;transform:rotate(-10deg)"></div>
+  </div>
+  <div class="rg fb" style="right:0vw;top:79vh;width:clamp(75px,11vw,160px)">
+    <div class="rose-mk" style="background:#8B2545;transform:rotate(14deg)"></div>
+  </div>
+
+  <!-- SMALL ACCENT ROSES -->
+  <div class="rg fc" style="left:19vw;top:19vh;width:clamp(35px,5vw,72px)">
+    <div class="rose-mk" style="background:#f7c2ca;transform:rotate(-18deg)"></div>
+  </div>
+  <div class="rg fa" style="right:20vw;top:27vh;width:clamp(38px,5.5vw,78px)">
+    <div class="rose-mk" style="background:#8B2545;transform:rotate(12deg)"></div>
+  </div>
+  <div class="rg fd" style="left:25vw;top:66vh;width:clamp(33px,4.5vw,65px)">
+    <div class="rose-mk" style="background:#71557A;transform:rotate(-5deg)"></div>
+  </div>
+  <div class="rg ff" style="right:23vw;top:63vh;width:clamp(35px,5vw,72px)">
+    <div class="rose-mk" style="background:#9d85b6;transform:rotate(8deg)"></div>
+  </div>
+
+  <!-- 4 EXTRA ROSES -->
+  <div class="rg fb" style="left:44vw;top:14vh;width:clamp(42px,6vw,88px)">
+    <div class="rose-mk" style="background:#cc8db3;transform:rotate(-10deg)"></div>
+  </div>
+  <div class="rg fe" style="right:38vw;top:72vh;width:clamp(38px,5.5vw,80px)">
+    <div class="rose-mk" style="background:#f6a5c0;transform:rotate(14deg)"></div>
+  </div>
+  <div class="rg fa" style="left:8vw;top:36vh;width:clamp(36px,5vw,70px)">
+    <div class="rose-mk" style="background:#837ab6;transform:rotate(-22deg)"></div>
+  </div>
+  <div class="rg fc" style="right:8vw;top:54vh;width:clamp(40px,5.5vw,78px)">
+    <div class="rose-mk" style="background:#8B2545;transform:rotate(8deg)"></div>
+  </div>
+
+</div>
+
+
+<div class="envelope-wrapper">
+  <p class="name-text">Dr. Vania Najam</p>
+
+  <button class="env-btn" id="env-btn" aria-label="Open Vania's portfolio" onclick="openPortfolio()">
+    <svg class="env-svg" width="370" height="268" viewBox="0 0 370 268" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ep" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#FBF6EF"/>
+          <stop offset="100%" stop-color="#EFE6D8"/>
+        </linearGradient>
+        <linearGradient id="ef" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#F2EAE0"/>
+          <stop offset="100%" stop-color="#E8DCCC"/>
+        </linearGradient>
+        <radialGradient id="sg" cx="38%" cy="33%" r="72%">
+          <stop offset="0%"  stop-color="#EDAEC8"/>
+          <stop offset="50%" stop-color="#D183A9"/>
+          <stop offset="100%" stop-color="#A85880"/>
+        </radialGradient>
+        <linearGradient id="gg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"  stop-color="#EDD06A"/>
+          <stop offset="45%" stop-color="#4B1535"/>
+          <stop offset="100%" stop-color="#8E6018"/>
+        </linearGradient>
+        <filter id="dsf" x="-8%" y="-8%" width="116%" height="116%">
+          <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#4B1535" flood-opacity=".18"/>
+        </filter>
+        <!-- Turns a black-on-transparent PNG into solid gold -->
+        <filter id="gtint" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+          <feFlood flood-color="#EDD06A" flood-opacity="1" result="gold"/>
+          <feComposite in="gold" in2="SourceAlpha" operator="in"/>
+        </filter>
+      </defs>
+
+      <!-- Envelope body (no flap — flap is separate for 3D animation) -->
+      <g filter="url(#dsf)">
+        <rect x="0" y="34" width="370" height="234" rx="5" fill="url(#ep)" stroke="#D6C8B0" stroke-width="1.3"/>
+        <path d="M0,34 L0,268 L185,172Z"    fill="#EDE2D4" opacity=".75"/>
+        <path d="M370,34 L370,268 L185,172Z" fill="#E8DBCC" opacity=".75"/>
+        <path d="M0,268 L185,172 L370,268Z"  fill="#F0E7DB"/>
+        <line x1="0"   y1="34" x2="185" y2="172" stroke="#C8B89C" stroke-width=".7" opacity=".35"/>
+        <line x1="370" y1="34" x2="185" y2="172" stroke="#C8B89C" stroke-width=".7" opacity=".35"/>
+      </g>
+
+      <!-- Flap — separate group so it can 3D-rotate independently -->
+      <g class="env-flap">
+        <path d="M0,34 L185,152 L370,34" fill="url(#ef)" stroke="#D0C0A4" stroke-width="1.1"/>
+      </g>
+
+      <!-- Wax Seal -->
+      <g class="env-wax" transform="translate(185,152)">
+        <circle cx="2" cy="5" r="46" fill="rgba(75,21,53,.22)"/>
+        <circle cx="0" cy="0" r="46" fill="#BD78A0"/>
+        <circle cx="0" cy="0" r="41" fill="url(#sg)"/>
+        <circle cx="0" cy="0" r="36" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.2"/>
+        <circle cx="0" cy="0" r="35" fill="none" stroke="rgba(75,21,53,.12)"   stroke-width="1.2"/>
+
+        <!-- Real rose PNG on seal — turned gold via filter -->
+        <image id="seal-rose-img" href="no bg 1.png" x="-41" y="-41" width="82" height="82" filter="url(#gtint)"/>
+        <!-- Gloss sheen -->
+        <ellipse cx="-11" cy="-15" rx="16" ry="10" fill="rgba(255,255,255,.14)" transform="rotate(-30,-11,-15)"/>
+      </g>
+    </svg>
+  </button>
+
+  <p class="open-label">open to explore</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PORTFOLIO PAGE — slides up from bottom when envelope is opened
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="portfolio-page" id="portfolio-page">
+
+  <button class="port-back" onclick="closePortfolio()">&#8592; Back</button>
+
+  <div class="port-bg-wrap">
+
+  <!-- Rose accents flanking the hero -->
+  <div class="port-rose-l">
+    <div class="rose-mk" style="background:#cc8db3;transform:rotate(-12deg)"></div>
+  </div>
+  <div class="port-rose-r">
+    <div class="rose-mk" style="background:#837ab6;transform:rotate(8deg)"></div>
+  </div>
+
+  <!-- ── Hero ──────────────────────────────────────── -->
+  <section class="port-hero">
+    <div class="port-ghost">
+      <span>Creative</span>
+      <span>Portfolio</span>
+    </div>
+
+    <!-- Hero flowers: around "Creative", "Portfolio" and lego -->
+    <div style="position:absolute;pointer-events:none;opacity:.38;left:6%;top:8%;width:clamp(58px,7.5vw,108px)">
+      <div class="rose-mk" style="background:#f6a5c0;transform:rotate(-18deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.30;left:22%;top:60%;width:clamp(44px,5.5vw,78px)">
+      <div class="rose-mk" style="background:#837ab6;transform:rotate(14deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.33;left:14%;top:35%;width:clamp(36px,4.5vw,64px)">
+      <div class="rose-mk" style="background:#cc8db3;transform:rotate(-6deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.35;right:8%;top:6%;width:clamp(62px,8vw,115px)">
+      <div class="rose-mk" style="background:#cc8db3;transform:rotate(22deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.28;right:20%;top:62%;width:clamp(40px,5vw,70px)">
+      <div class="rose-mk" style="background:#8B2545;transform:rotate(-10deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.32;right:10%;top:38%;width:clamp(38px,4.5vw,66px)">
+      <div class="rose-mk" style="background:#f6a5c0;transform:rotate(8deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.26;left:40%;top:4%;width:clamp(34px,4vw,58px)">
+      <div class="rose-mk" style="background:#837ab6;transform:rotate(-20deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.28;right:36%;bottom:8%;width:clamp(36px,4.5vw,62px)">
+      <div class="rose-mk" style="background:#cc8db3;transform:rotate(16deg)"></div>
+    </div>
+
+    <!-- User-circled positions -->
+    <div style="position:absolute;pointer-events:none;opacity:.40;left:42%;top:7%;width:clamp(40px,4.8vw,68px)">
+      <div class="rose-mk" style="background:#D183A9;transform:rotate(10deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.36;left:61%;top:17%;width:clamp(46px,5.5vw,78px)">
+      <div class="rose-mk" style="background:#71557A;transform:rotate(-14deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.38;right:5%;top:13%;width:clamp(58px,7vw,100px)">
+      <div class="rose-mk" style="background:#D183A9;transform:rotate(25deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.42;left:11%;top:30%;width:clamp(62px,7.5vw,108px)">
+      <div class="rose-mk" style="background:#71557A;transform:rotate(-8deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.38;left:35%;top:24%;width:clamp(68px,8.5vw,122px)">
+      <div class="rose-mk" style="background:#3A345B;transform:rotate(18deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.35;left:75%;top:30%;width:clamp(75px,9.5vw,138px)">
+      <div class="rose-mk" style="background:#837ab6;transform:rotate(-20deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.40;right:-1%;top:65%;width:clamp(55px,6.5vw,92px)">
+      <div class="rose-mk" style="background:#4B1535;transform:rotate(12deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.42;left:7%;top:74%;width:clamp(78px,9.5vw,138px)">
+      <div class="rose-mk" style="background:#D183A9;transform:rotate(-16deg)"></div>
+    </div>
+    <div style="position:absolute;pointer-events:none;opacity:.38;left:83%;top:82%;width:clamp(52px,6.5vw,92px)">
+      <div class="rose-mk" style="background:#71557A;transform:rotate(22deg)"></div>
+    </div>
+
+    <div class="port-hero-inner">
+      <div class="port-figure">
+        <img src="lego.jpeg" alt="Vania"/>
+      </div>
+
+      <h1 class="port-name">Vania</h1>
+      <p class="port-role">Dental Researcher &nbsp;&middot;&nbsp; Creative Designer</p>
+      <div class="port-rule"></div>
+      <button class="port-collab-btn" onclick="toggleEmailPopup(event)">Let&rsquo;s Work Together</button>
+      <div class="port-email-popup" id="emailPopup">
+        <span class="port-email-popup-label">Get in touch</span>
+        <a href="mailto:vanianajam@gmail.com" class="port-email-popup-addr">vanianajam@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About ─────────────────────────────────────── -->
+  <section class="port-section">
+    <span class="port-label">About</span>
+    <h2 class="port-heading">Dentistry is an art</h2>
+    <p class="port-body">
+      I&rsquo;m Vania &mdash; a creative designer with a passion for transforming ideas into visual
+      experiences. My journey from the world of dentistry to research &amp; design has fueled my creative mind
+      and enhanced my attention to detail. Dentistry has always been a form of art, where precision
+      and creativity come together to create beauty and functionality &mdash; and those same skills
+      seamlessly translate into everything I design. I&rsquo;m constantly inspired by the challenge
+      of bringing fresh perspectives to each project and am always enthusiastic about collaborating
+      on new and exciting ventures.
+    </p>
+  </section>
+
+  <!-- ── Services ──────────────────────────────────── -->
+  <section class="port-section" style="padding-top:0">
+    <h2 class="port-heading">Services</h2>
+
+    <!-- Design & Visual Arts -->
+    <div class="port-svc-group">
+      <h3 class="port-tname">Design &amp; Visual Arts</h3>
+      <div class="port-services">
+        <span class="port-pill">Graphic Design</span>
+        <span class="port-pill">Logo Design</span>
+        <span class="port-pill">Illustration</span>
+        <span class="port-pill">Medical Illustration</span>
+        <span class="port-pill">Print Design</span>
+        <span class="port-pill">Presentation Design</span>
+        <span class="port-pill">Web &amp; App Design</span>
+        <span class="port-pill">Handmade Art</span>
+      </div>
+    </div>
+
+    <!-- Content & Media -->
+    <div class="port-svc-group">
+      <h3 class="port-tname">Content &amp; Media</h3>
+      <div class="port-services">
+        <span class="port-pill">Social Media Management</span>
+        <span class="port-pill">Content Creation</span>
+        <span class="port-pill">Photography &amp; Videography</span>
+        <span class="port-pill">Video Editing</span>
+        <span class="port-pill">Reel &amp; Short-Form Content</span>
+        <span class="port-pill">Caption Writing / Copywriting</span>
+      </div>
+    </div>
+
+    <!-- Dentistry & Research -->
+    <div class="port-svc-group">
+      <h3 class="port-tname">Dentistry &amp; Research</h3>
+      <div class="port-services">
+        <span class="port-pill">Clinical Dentistry</span>
+        <span class="port-pill">Dental Education Content</span>
+        <span class="port-pill">Dental Research &amp; Writing</span>
+        <span class="port-pill">Research</span>
+        <span class="port-pill">Proofreading</span>
+        <span class="port-pill">Creative Project Management</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── Experience ─────────────────────────────────── -->
+  <section class="port-section" style="padding-top:0">
+    <h2 class="port-heading">Experience</h2>
+    <div class="port-timeline">
+
+      <div class="port-titem">
+        <p class="port-tdate">Jul 2025 &ndash; Oct 2025</p>
+        <p class="port-tname">Freelance Collaborator</p>
+        <p class="port-torg">Drew Binsky LLC &mdash; Remote, Arizona, USA</p>
+        <p class="port-tdesc">Created online graphics and visual content for one of the world&rsquo;s most-watched travel creators. Worked remotely across time zones delivering polished, on-brand digital assets.</p>
+      </div>
+
+      <div class="port-titem">
+        <p class="port-tdate">Apr 2021 &ndash; Present</p>
+        <p class="port-tname">Founder &amp; Owner</p>
+        <p class="port-torg">Canvas.savvy &mdash; Islamabad, Pakistan</p>
+        <p class="port-tdesc">Built a self-run creative studio producing bespoke handmade art &mdash; acrylic paintings, embroidery, and textured pieces &mdash; crafted to order for clients. A passion project turned business that blends emotion, craft, and artistry.</p>
+      </div>
+
+      <div class="port-titem">
+        <p class="port-tdate">Oct 2024 &ndash; Nov 2024</p>
+        <p class="port-tname">General Dentist</p>
+        <p class="port-torg">Defence Dental Clinic &mdash; Islamabad, Pakistan</p>
+        <p class="port-tdesc">Part-time clinical practice with a focus on patient care and appointment management.</p>
+      </div>
+
+      <div class="port-titem">
+        <p class="port-tdate">Mar 2023 &ndash; Apr 2024</p>
+        <p class="port-tname">General Dentist</p>
+        <p class="port-torg">Dental Care &mdash; Rawalpindi, Pakistan</p>
+        <p class="port-tdesc">Provided comprehensive dental treatment with a strong focus on patient education and clinical excellence.</p>
+      </div>
+
+      <div class="port-titem">
+        <p class="port-tdate">Jan 2022 &ndash; Jan 2023</p>
+        <p class="port-tname">House Officer</p>
+        <p class="port-torg">Armed Forces Institute of Dentistry (AFID) &mdash; Rawalpindi</p>
+        <p class="port-tdesc">Full-time clinical house officer role covering all dental specialities in one of Pakistan&rsquo;s leading military medical institutions.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Education ──────────────────────────────────── -->
+  <section class="port-section" style="padding-top:0">
+    <h2 class="port-heading">Education</h2>
+    <div class="port-timeline">
+
+      <div class="port-titem">
+        <p class="port-tdate">2024 &ndash; Present</p>
+        <p class="port-tname">MDSC &mdash; Masters of Dental Science</p>
+        <p class="port-torg">University Malaya (UM) &mdash; Kuala Lumpur, Malaysia</p>
+        <p class="port-tdesc">Ongoing postgraduate research degree in dental science, deepening clinical expertise while continuing to grow as a creative professional in Malaysia.</p>
+      </div>
+
+      <div class="port-titem">
+        <p class="port-tdate">2017 &ndash; 2021</p>
+        <p class="port-tname">BDS &mdash; Bachelor of Dental Surgery</p>
+        <p class="port-torg">Army Medical College (AMC) &mdash; Rawalpindi, Pakistan</p>
+        <p class="port-tdesc">Professional degree in dentistry that sharpened my eye for detail and refined my problem-solving abilities &mdash; skills that seamlessly translate into every design project I take on.</p>
+      </div>
+
+      <div class="port-titem">
+        <p class="port-tdate">Self-taught</p>
+        <p class="port-tname">Photography &amp; Graphic Design</p>
+        <p class="port-torg">Independent &mdash; Online Resources</p>
+        <p class="port-tdesc">Developed photography and graphic design skills through self-driven learning. This journey has equipped me with a diverse skill set and a deep understanding of design principles, allowing me to approach each project with both technical expertise and creative confidence.</p>
+      </div>
+
+      <div class="port-titem">
+        <p class="port-tdate">2005 &ndash; 2017</p>
+        <p class="port-tname">School &amp; College</p>
+        <p class="port-torg">Army Public School &mdash; APSACS</p>
+        <p class="port-tdesc">Foundation years that nurtured both academic rigour and early creative interests.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Skills ─────────────────────────────────────── -->
+  <section class="port-section port-section-lt" style="padding-top:0">
+    <h2 class="port-heading">Skill Set</h2>
+    <div class="port-skills">
+      <span class="port-skill">Canva</span>
+      <span class="port-skill">Adobe Illustrator</span>
+      <span class="port-skill">PicsArt</span>
+      <span class="port-skill">CapCut</span>
+      <span class="port-skill">Instagram</span>
+      <span class="port-skill">Twitter / X</span>
+      <span class="port-skill">Claude AI</span>
+    </div>
+  </section>
+
+  <!-- ── Selected Work ─────────────────────────────── -->
+  <section class="port-section port-section-lt" style="padding-top:0">
+    <h2 class="port-heading">Projects</h2>
+    <div class="port-grid">
+      <div class="port-card proj-clickable" style="cursor:pointer"
+        data-icon="🦷" data-type="Product Design" data-title="Dental Clinic Notepad"
+        data-desc="My first ever graphic design project — a branded notepad designed for a dental clinic. The concept was approved immediately by the client without a single revision and sent straight to print. A proud milestone that sparked my journey into design."
+        data-tags="Product Design,Print,Branding,Dental"
+        data-images="projects/notepad-design.jpeg|The Design|projects/notepad-photo.jpeg|Finished Product"
+        data-fit="contain">
+        <span class="port-card-icon">🦷</span>
+        Dental Clinic Notepad
+        <span class="port-card-sub">Product Design &mdash; first ever graphic design project, instantly approved &amp; sent to print</span>
+      </div>
+      <div class="port-card proj-clickable" style="cursor:pointer"
+        data-icon="✦" data-type="Signage & Branding" data-title="Clinic Signboard"
+        data-desc="Developed multiple signboard concepts for a dental clinic, presenting a range of styles and layouts. The client selected one design which was then professionally fabricated and installed — now representing the clinic's identity at their entrance."
+        data-tags="Signage,Branding,Concept Development,Print"
+        data-images="projects/signboard-1.jpeg|Concept 1|projects/signboard-2.jpeg|Concept 2 — Selected|projects/signboard-3.jpeg|Concept 3|projects/signboard-4.jpeg|Concept 4|projects/signboard-installed.jpeg|Installed at Clinic">
+        <span class="port-card-icon">✦</span>
+        Clinic Signboard
+        <span class="port-card-sub">Signage &amp; Branding &mdash; multiple concepts presented; client-selected design fabricated &amp; installed</span>
+      </div>
+      <div class="port-card proj-clickable" style="cursor:pointer"
+        data-icon="🎓" data-type="Content Creation" data-title="Academic Presentations"
+        data-desc="Designed a series of visually engaging presentation decks for Senior Lecturer Ali at a university media studies department. The slides were crafted to be clear, structured, and visually compelling — praised by students for making complex content accessible and enjoyable."
+        data-tags="Presentation Design,Academic,Visual Storytelling,Education"
+        data-cols="3"
+        data-images="projects/pres1-1.jpeg|Presentation 1 — Title Slide|projects/pres1-2.jpeg|Agenda|projects/pres1-3.jpeg|Journalism — Introduction|projects/pres1-4.jpeg|Types of Journalists|projects/pres1-5.jpeg|By Task — Mind Map|projects/pres1-6.jpeg|What is News?|projects/pres2-1.jpeg|Presentation 2 — Title Slide|projects/pres2-2.jpeg|What is Media Psychology?|projects/pres2-3.jpeg|Why People Post & Consume Social Media">
+        <span class="port-card-icon">🎓</span>
+        Academic Presentations
+        <span class="port-card-sub">Content Creation &mdash; visually engaging slides for a media studies lecturer; praised by students</span>
+      </div>
+      <div class="port-card proj-clickable" style="cursor:pointer"
+        data-icon="📱" data-type="Social Media Management" data-title="@armymedunion"
+        data-desc="Managed the full social media presence for @armymedunion from June 2022 to January 2024 — creating dental education content, growing the page to 1,307 followers, and establishing a consistent, professional voice for the community."
+        data-tags="Social Media,Instagram,Content Strategy,Dental Education"
+        data-cols="3"
+        data-images="projects/army-post1-1.jpeg|Post 1 — Slide 1|projects/army-post1-2.jpeg|Post 1 — Slide 2|projects/army-post1-3.jpeg|Post 1 — Slide 3||projects/army-post2-1.jpeg|Post 2 — Slide 1|projects/army-post2-2.jpeg|Post 2 — Slide 2||projects/army-post2-3.jpeg|Post 2 — Slide 3|projects/army-post2-4.jpeg|Post 2 — Slide 4||projects/army-post3-1.jpeg|Post 3 — Slide 1|projects/army-post3-2.jpeg|Post 3 — Slide 2|projects/army-post3-3.jpeg|Post 3 — Slide 3">
+        <span class="port-card-icon">📱</span>
+        @armymedunion
+        <span class="port-card-sub">Social Media Management &mdash; Jun 2022 &ndash; Jan 2024, 1,307 followers, dental content lead</span>
+      </div>
+      <div class="port-card proj-clickable" style="cursor:pointer"
+        data-icon="✉" data-type="Print Design" data-title="Invitation Cards & Flyers"
+        data-desc="Designed a wide range of bespoke print materials for clients across various occasions — including wedding invitations, event flyers, exhibition backdrops, and promotional posters. Each piece was tailored to the client's vision with careful attention to typography, layout, and print specifications."
+        data-tags="Print Design,Wedding,Events,Posters,Flyers"
+        data-cols="3"
+        data-images="projects/invite-1.jpeg|Sample 1|projects/invite-2.jpeg|Sample 2|projects/invite-3.jpeg|Sample 3">
+        <span class="port-card-icon">✉</span>
+        Invitation Cards &amp; Flyers
+        <span class="port-card-sub">Print Design &mdash; weddings, events, backdrops, posters &amp; more</span>
+      </div>
+      <div class="port-card proj-clickable" style="cursor:pointer"
+        data-icon="📷" data-type="Photography & Videography" data-title="Food & Frames"
+        data-desc="A personal photography and videography portfolio capturing food, landscapes, and events. From restaurant visits and home cooking to outdoor scenery and occasions — handled everything from shooting and lighting to editing and publishing."
+        data-tags="Photography,Videography,Food,Landscapes,Events,Content Creation"
+        data-cols="3"
+        data-images="projects/food-1.jpeg|Shot 1|projects/food-2.jpeg|Shot 2|projects/food-3.jpeg|Shot 3|projects/food-8.jpeg|Shot 4|projects/food-5.jpeg|Shot 5|projects/food-6.jpeg|Shot 6|projects/food-7.jpeg|Shot 7">
+        <span class="port-card-icon">📷</span>
+        Food &amp; Frames
+        <span class="port-card-sub">Photography &amp; Videography &mdash; food, landscapes &amp; events</span>
+      </div>
+      <div class="port-card proj-clickable" style="cursor:pointer"
+        data-icon="🎨" data-type="Handmade Art" data-title="Canvas.savvy Paintings"
+        data-desc="Founded and ran Canvas.savvy — a self-run creative studio producing bespoke handmade art for clients. Specialising in acrylic paintings, embroidery, and textured mixed-media pieces, every piece is crafted to order. A passion project turned business that blends emotion, craft, and artistry."
+        data-tags="Acrylic Painting,Embroidery,Mixed Media,Handmade,Commission"
+        data-cols="3"
+        data-images="projects/canvas-1.jpeg|Piece 1|projects/canvas-2.jpeg|Piece 2|projects/canvas-3.jpeg|Piece 3|projects/canvas-4.jpeg|Piece 4|projects/canvas-5.jpeg|Piece 5|projects/canvas-6.jpeg|Piece 6|projects/canvas-7.jpeg|Piece 7|projects/canvas-8.jpeg|Piece 8|projects/canvas-9.jpeg|Piece 9|projects/canvas-10.jpeg|Piece 10|projects/canvas-11.jpeg|Piece 11">
+        <span class="port-card-icon">🎨</span>
+        Canvas.savvy Paintings
+        <span class="port-card-sub">Handmade Art &mdash; bespoke acrylic paintings, embroidery &amp; textured mixed-media pieces</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Testimonials ─────────────────────────────── -->
+  <section class="port-section port-section-lt" style="padding-top:0">
+    <h2 class="port-heading">Testimonials</h2>
+    <div class="port-testimonial">
+      <blockquote>
+        The presentations Vania prepared for my lectures were exceptionally well-structured and visually engaging. My students responded to them immediately — clear, professional, and genuinely impressive work.
+      </blockquote>
+      <cite>Ali &mdash; Senior Lecturer</cite>
+    </div>
+    <div class="port-testimonial">
+      <blockquote>
+        Vania designed our clinic signboard and the result was beyond what we imagined. She understood the brief immediately, presented multiple concepts, and the final piece was fabricated exactly as designed. Professional, creative, and incredibly easy to work with.
+      </blockquote>
+      <cite>Dr. Rustam &mdash; Dental Care, Rawalpindi</cite>
+    </div>
+    <div class="port-testimonial">
+      <blockquote>
+        Polished, on-brand, and always on time — Vania delivered exactly what we needed without a single revision round.
+      </blockquote>
+      <cite>Drew Binsky LLC &mdash; Content Team</cite>
+    </div>
+    <div class="port-testimonial">
+      <blockquote>
+        I commissioned a custom acrylic painting through Canvas.savvy and it was absolutely stunning. Vania captured exactly the feeling I described — the colours, the texture, everything. I&rsquo;ve already ordered two more pieces.
+      </blockquote>
+      <cite>Nadia &mdash; Canvas.savvy Client</cite>
+    </div>
+  </section>
+
+  <footer class="port-footer">
+    vanianajam@gmail.com &nbsp;&middot;&nbsp; Kuala Lumpur, Malaysia &nbsp;&middot;&nbsp; Islamabad, Pakistan
+  </footer>
+
+  </div><!-- /.port-bg-wrap -->
+
+</div>
+
+<!-- Project Modal — outside portfolio-page so position:fixed works correctly -->
+<div class="proj-overlay" id="projOverlay" onclick="closeProject(event)">
+  <div class="proj-modal" id="projModal">
+    <button class="proj-modal-close" onclick="closeProjectBtn()">✕ Close</button>
+    <span class="proj-modal-icon" id="projIcon"></span>
+    <p class="proj-modal-type" id="projType"></p>
+    <h3 class="proj-modal-title" id="projTitle"></h3>
+    <div class="proj-modal-divider"></div>
+    <div class="proj-modal-gallery" id="projGallery" style="display:none"></div>
+    <p class="proj-modal-desc" id="projDesc"></p>
+    <div class="proj-modal-tags" id="projTags"></div>
+  </div>
+</div>
+
+<!-- Lightbox — full screen image viewer -->
+<div id="lightboxOverlay" onclick="closeLightbox()" style="
+  display:none; position:fixed; inset:0; z-index:9999;
+  background:rgba(0,0,0,.92); backdrop-filter:blur(8px);
+  align-items:center; justify-content:center; cursor:zoom-out;
+">
+  <img id="lightboxImg" src="" alt="" style="
+    max-width:92vw; max-height:92vh; object-fit:contain;
+    border-radius:6px; box-shadow:0 8px 48px rgba(0,0,0,.6);
+    pointer-events:none;
+  "/>
+  <button onclick="closeLightbox()" style="
+    position:fixed; top:20px; right:28px; background:none; border:none;
+    color:#fff; font-size:1.5rem; cursor:pointer; opacity:.8; font-family:'Cinzel',serif;
+    letter-spacing:.1em;
+  ">✕</button>
+</div>
+
+
+<script>
+  // Flood-fill background removal — only removes pixels connected to the
+  // image edges that match the background colour, so interior dark features
+  // (eyes, eyebrows, etc.) are never touched.
+  function processLegoImage() {
+    var img = document.querySelector('.port-figure img');
+    function run() {
+      try {
+        var c = document.createElement('canvas');
+        var w = img.naturalWidth, h = img.naturalHeight;
+        c.width = w; c.height = h;
+        var ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        var id = ctx.getImageData(0, 0, w, h);
+        var d = id.data;
+
+        // Sample background colour from the top-left corner
+        var bgR = d[0], bgG = d[1], bgB = d[2];
+        var threshold = 50; // max colour distance to be considered background
+
+        var visited = new Uint8Array(w * h);
+        var queue = new Int32Array(w * h * 2);
+        var qHead = 0, qTail = 0;
+
+        function colorDist(pi) {
+          var dr = d[pi]   - bgR;
+          var dg = d[pi+1] - bgG;
+          var db = d[pi+2] - bgB;
+          return Math.sqrt(dr*dr + dg*dg + db*db);
+        }
+
+        function seed(x, y) {
+          var idx = y * w + x;
+          if (visited[idx]) return;
+          if (colorDist(idx * 4) < threshold) {
+            visited[idx] = 1;
+            queue[qTail++] = x;
+            queue[qTail++] = y;
+          }
+        }
+
+        // Seed from all four edges
+        for (var x = 0; x < w; x++) { seed(x, 0); seed(x, h - 1); }
+        for (var y = 0; y < h; y++) { seed(0, y); seed(w - 1, y); }
+
+        // BFS flood fill
+        while (qHead < qTail) {
+          var cx = queue[qHead++], cy = queue[qHead++];
+          seed(cx - 1, cy); seed(cx + 1, cy);
+          seed(cx, cy - 1); seed(cx, cy + 1);
+        }
+
+        // Make all flooded pixels transparent + soft feather on their border
+        for (var i = 0; i < w * h; i++) {
+          if (!visited[i]) continue;
+          var pi = i * 4;
+          // Check if any 4-neighbour is NOT background (edge pixel → feather)
+          var xi = i % w, yi = Math.floor(i / w);
+          var isEdge = (xi > 0     && !visited[i - 1]) ||
+                       (xi < w - 1 && !visited[i + 1]) ||
+                       (yi > 0     && !visited[i - w]) ||
+                       (yi < h - 1 && !visited[i + w]);
+          d[pi + 3] = isEdge ? 80 : 0;
+        }
+
+        // Erase the ChatGPT watermark sitting in the bottom-right corner
+        var wmX = Math.round(w * 0.72), wmY = Math.round(h * 0.88);
+        for (var wy = wmY; wy < h; wy++) {
+          for (var wx = wmX; wx < w; wx++) {
+            d[(wy * w + wx) * 4 + 3] = 0;
+          }
+        }
+
+        ctx.putImageData(id, 0, 0);
+        img.src = c.toDataURL('image/png');
+      } catch(e) { /* leave unchanged on CORS or other error */ }
+    }
+    if (img.complete && img.naturalWidth) run();
+    else img.addEventListener('load', run);
+  }
+  window.addEventListener('load', processLegoImage);
+
+  // ── Strip white background from rose PNG, auto-centre on seal,
+  //    and pipe result to every .rose-mk mask ─────────────────────
+  function processRoseImage() {
+    var img = new Image();
+    img.onload = function() {
+      try {
+        var w = img.naturalWidth, h = img.naturalHeight;
+        var c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        var ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        var id = ctx.getImageData(0, 0, w, h);
+        var d = id.data;
+
+        // If background is opaque (white), flood-fill edges to transparent
+        if (d[3] >= 10) {
+          var bgR = d[0], bgG = d[1], bgB = d[2];
+          var threshold = 40;
+          var visited = new Uint8Array(w * h);
+          var queue = new Int32Array(w * h * 2);
+          var qHead = 0, qTail = 0;
+          function colorDist(pi) {
+            var dr = d[pi]-bgR, dg = d[pi+1]-bgG, db = d[pi+2]-bgB;
+            return Math.sqrt(dr*dr + dg*dg + db*db);
+          }
+          function seed(x, y) {
+            if (x < 0 || x >= w || y < 0 || y >= h) return;
+            var idx = y * w + x;
+            if (visited[idx]) return;
+            if (d[idx*4+3] < 10 || colorDist(idx * 4) < threshold) {
+              visited[idx] = 1;
+              queue[qTail++] = x; queue[qTail++] = y;
+            }
+          }
+          for (var x = 0; x < w; x++) { seed(x, 0); seed(x, h-1); }
+          for (var y = 0; y < h; y++) { seed(0, y); seed(w-1, y); }
+          while (qHead < qTail) {
+            var bx = queue[qHead++], by = queue[qHead++];
+            seed(bx-1, by); seed(bx+1, by);
+            seed(bx, by-1); seed(bx, by+1);
+          }
+          for (var i = 0; i < w * h; i++) {
+            if (visited[i]) d[i*4 + 3] = 0;
+          }
+        }
+
+        // Normalise every remaining opaque pixel to solid black.
+        // This erases Shutterstock watermark text (semi-transparent pixels
+        // inside the silhouette) by making the whole silhouette uniform,
+        // so the CSS mask shows a clean, single-colour rose with no text.
+        for (var i = 0; i < w * h; i++) {
+          if (d[i*4 + 3] > 10) {
+            d[i*4]     = 0;   // R → black
+            d[i*4 + 1] = 0;   // G → black
+            d[i*4 + 2] = 0;   // B → black
+            d[i*4 + 3] = 255; // A → fully opaque
+          }
+        }
+        ctx.putImageData(id, 0, 0);
+
+        var dataURL = c.toDataURL('image/png');
+
+        // Push processed image to every CSS-masked rose
+        var maskVal = 'url(' + dataURL + ')';
+        document.querySelectorAll('.rose-mk').forEach(function(el) {
+          el.style.webkitMaskImage = maskVal;
+          el.style.maskImage = maskVal;
+        });
+
+        // ── Auto-centre the seal rose ──────────────────────────────
+        // Measure the bounding box of actual visible (rose) pixels so we
+        // can compensate for unequal margins in the PNG and place the rose
+        // exactly at the centre of the wax seal circle.
+        var minX = w, maxX = 0, minY = h, maxY = 0;
+        for (var i = 0; i < w * h; i++) {
+          if (d[i*4 + 3] > 10) {
+            var px = i % w, py = Math.floor(i / w);
+            if (px < minX) minX = px;
+            if (px > maxX) maxX = px;
+            if (py < minY) minY = py;
+            if (py > maxY) maxY = py;
+          }
+        }
+        // Centre of the rose content vs centre of the full PNG canvas
+        var roseCX  = (minX + maxX) / 2, roseCY  = (minY + maxY) / 2;
+        var canvasCX = w / 2,            canvasCY = h / 2;
+        // Fractional offset: positive → rose is right/down of canvas centre
+        var offFX = (roseCX - canvasCX) / w;
+        var offFY = (roseCY - canvasCY) / h;
+
+        // Seal image dimensions (SVG units, centred at origin 0,0)
+        var sealSize = 82;
+        var half = sealSize / 2;
+        // Shift x,y to compensate so the rose centre lands on (0,0)
+        var sx = (-half - offFX * sealSize).toFixed(1);
+        var sy = (-half - offFY * sealSize).toFixed(1);
+
+        var sealImg = document.getElementById('seal-rose-img');
+        if (sealImg) {
+          sealImg.setAttribute('href', dataURL);
+          sealImg.setAttribute('x', sx);
+          sealImg.setAttribute('y', sy);
+          sealImg.setAttribute('width',  sealSize);
+          sealImg.setAttribute('height', sealSize);
+        }
+
+      } catch(e) { /* leave unchanged on any error */ }
+    };
+    img.src = 'no bg 1.png';
+  }
+  window.addEventListener('load', processRoseImage);
+
+  /* ── Email popup ─────────────────────────────────── */
+  function toggleEmailPopup(e) {
+    e.stopPropagation();
+    document.getElementById('emailPopup').classList.toggle('visible');
+  }
+  document.addEventListener('click', function(e) {
+    var popup = document.getElementById('emailPopup');
+    if (popup && !popup.contains(e.target)) popup.classList.remove('visible');
+  });
+
+  /* ── Project modal ───────────────────────────────── */
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.proj-clickable');
+    if (!card) return;
+    var d = card.dataset;
+    document.getElementById('projIcon').textContent  = d.icon;
+    document.getElementById('projType').textContent  = d.type;
+    document.getElementById('projTitle').textContent = d.title;
+    document.getElementById('projDesc').textContent  = d.desc;
+
+    // Gallery
+    var galleryEl = document.getElementById('projGallery');
+    galleryEl.innerHTML = '';
+    if (d.images) {
+      galleryEl.style.display = '';
+      // Check if images use || row-group separators
+      if (d.images.indexOf('||') !== -1) {
+        galleryEl.className = 'proj-gallery-rows';
+        var groups = d.images.split('||');
+        groups.forEach(function(group) {
+          var parts = group.trim().split('|');
+          var rowEl = document.createElement('div');
+          rowEl.className = 'proj-gallery-row';
+          for (var i = 0; i < parts.length; i += 2) {
+            var wrap = document.createElement('div');
+            var img = document.createElement('img');
+            img.src = parts[i].trim();
+            img.alt = parts[i+1] ? parts[i+1].trim() : '';
+            var lbl = document.createElement('p');
+            lbl.className = 'proj-modal-img-label';
+            lbl.textContent = parts[i+1] ? parts[i+1].trim() : '';
+            wrap.appendChild(img);
+            wrap.appendChild(lbl);
+            rowEl.appendChild(wrap);
+          }
+          galleryEl.appendChild(rowEl);
+        });
+      } else {
+        // Original flat grid
+        var parts = d.images.split('|');
+        var imgCount = Math.ceil(parts.length / 2);
+        var colsClass = d.cols ? ' cols'+d.cols : (imgCount === 1 ? ' single' : '');
+        var fitClass = d.fit === 'contain' ? ' contain' : '';
+        galleryEl.className = 'proj-modal-gallery' + colsClass + fitClass;
+        for (var i = 0; i < parts.length; i += 2) {
+          var wrap = document.createElement('div');
+          var img = document.createElement('img');
+          img.src = parts[i].trim();
+          img.alt = parts[i+1] ? parts[i+1].trim() : '';
+          var lbl = document.createElement('p');
+          lbl.className = 'proj-modal-img-label';
+          lbl.textContent = parts[i+1] ? parts[i+1].trim() : '';
+          wrap.appendChild(img);
+          wrap.appendChild(lbl);
+          galleryEl.appendChild(wrap);
+        }
+      }
+    } else {
+      galleryEl.style.display = 'none';
+    }
+
+    var tagsEl = document.getElementById('projTags');
+    tagsEl.innerHTML = '';
+    d.tags.split(',').forEach(function(t) {
+      var span = document.createElement('span');
+      span.className = 'proj-modal-tag';
+      span.textContent = t.trim();
+      tagsEl.appendChild(span);
+    });
+    document.getElementById('projOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+  function closeProjectBtn() {
+    document.getElementById('projOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeProject(e) {
+    if (e.target === document.getElementById('projOverlay')) closeProjectBtn();
+  }
+
+  // Lightbox
+  function openLightbox(src, alt) {
+    var lb = document.getElementById('lightboxOverlay');
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxImg').alt = alt || '';
+    lb.style.display = 'flex';
+  }
+  function closeLightbox() {
+    var lb = document.getElementById('lightboxOverlay');
+    lb.style.display = 'none';
+    document.getElementById('lightboxImg').src = '';
+  }
+  // Open lightbox on gallery image click
+  document.addEventListener('click', function(e) {
+    var img = e.target.closest('#projGallery img, #projGallery .proj-gallery-row img');
+    if (img) { e.stopPropagation(); openLightbox(img.src, img.alt); }
+  });
+  // Close lightbox on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeProjectBtn();
+  });
+
+  function openPortfolio() {
+    var btn  = document.getElementById('env-btn');
+    var page = document.getElementById('portfolio-page');
+    btn.classList.add('opening');
+    // let flap start folding first, then fade-merge portfolio in
+    setTimeout(function(){ page.classList.add('is-open'); }, 320);
+  }
+
+  function closePortfolio() {
+    var page = document.getElementById('portfolio-page');
+    page.classList.remove('is-open');
+    // reset envelope once page has faded out
+    setTimeout(function(){
+      var btn = document.getElementById('env-btn');
+      btn.classList.remove('opening');
+      page.scrollTop = 0;
+    }, 600);
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rose Style Options</title>
+<style>
+  body { margin:0; background:radial-gradient(ellipse at 55% 40%,#FBF6EF 0%,#F0E7DA 55%,#E8DACE 100%); font-family:Georgia,serif; min-height:100vh; }
+  h1 { text-align:center; font-size:1rem; letter-spacing:.35em; text-transform:uppercase; color:#4B1535; padding:36px 0 8px; font-weight:400; }
+  p.sub { text-align:center; font-size:.82rem; color:#71557A; letter-spacing:.1em; margin-bottom:36px; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:36px; max-width:860px; margin:0 auto; padding:0 40px 60px; }
+  .card { background:rgba(255,255,255,.32); border:1px solid rgba(75,21,53,.1); border-radius:14px; padding:36px 20px 22px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+  .card svg { display:block; }
+  .num { font-family:Georgia,serif; font-size:.7rem; letter-spacing:.38em; text-transform:uppercase; color:#4B1535; opacity:.5; }
+  .name { font-family:Georgia,serif; font-size:1.05rem; color:#4B1535; letter-spacing:.07em; font-style:italic; text-align:center; }
+  .desc { font-size:.8rem; color:#71557A; text-align:center; letter-spacing:.03em; line-height:1.65; }
+</style>
+</head>
+<body>
+<h1>Silhouette Rose Options</h1>
+<p class="sub">All in the bold stencil style — pick a number</p>
+
+<div class="grid">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- OPTION A: Tight Spiral — closest to reference -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="card">
+    <span class="num">Option A</span>
+    <svg width="210" height="220" viewBox="0 0 210 220">
+      <!-- Stem -->
+      <path d="M102,188 C100,178 97,168 94,160" stroke="#8B2545" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+      <!-- Bottom-left leaf -->
+      <path d="M94,160 C77,166 58,157 54,143 C66,134 84,140 94,160Z" fill="#8B2545"/>
+      <path d="M94,160 C79,154 65,146 54,143" fill="none" stroke="#FBF6EF" stroke-width="1.8" stroke-linecap="round" opacity=".65"/>
+      <!-- Top-right mini stem -->
+      <path d="M152,68 C157,57 159,46 156,38" stroke="#8B2545" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- Top leaf lower -->
+      <path d="M152,68 C164,60 170,48 167,38 C158,38 150,50 152,68Z" fill="#8B2545"/>
+      <path d="M152,68 C162,55 167,43 167,38" fill="none" stroke="#FBF6EF" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+      <!-- Top leaf upper -->
+      <path d="M157,46 C162,34 170,26 174,24 C170,34 163,42 157,46Z" fill="#8B2545"/>
+      <path d="M157,46 C163,36 170,28 174,24" fill="none" stroke="#FBF6EF" stroke-width="1.4" stroke-linecap="round" opacity=".6"/>
+
+      <!-- Rose head — round silhouette -->
+      <circle cx="102" cy="108" r="72" fill="#8B2545"/>
+
+      <!-- CARVED SPIRAL LINES — clockwise, tightest -->
+      <path d="M150,52 C176,80 170,124 148,150 C132,168 108,172 84,164"
+            fill="none" stroke="#FBF6EF" stroke-width="11" stroke-linecap="round"/>
+      <path d="M136,46 C160,72 156,114 136,140 C120,158 96,162 74,154"
+            fill="none" stroke="#FBF6EF" stroke-width="10" stroke-linecap="round"/>
+      <path d="M122,50 C144,74 140,112 122,136 C108,154 86,156 66,146"
+            fill="none" stroke="#FBF6EF" stroke-width="9" stroke-linecap="round"/>
+      <path d="M112,62 C130,84 128,114 112,134 C100,148 80,150 64,140"
+            fill="none" stroke="#FBF6EF" stroke-width="8" stroke-linecap="round"/>
+      <path d="M106,76 C120,94 116,116 102,130 C92,140 76,140 66,132"
+            fill="none" stroke="#FBF6EF" stroke-width="7" stroke-linecap="round"/>
+
+      <!-- Centre -->
+      <circle cx="90" cy="108" r="10" fill="#FBF6EF"/>
+      <circle cx="90" cy="108" r="5"  fill="#8B2545"/>
+    </svg>
+    <span class="name">Tight Spiral Rose</span>
+    <span class="desc">5 sweeping clockwise carved lines — closest to the reference style, bold stencil look</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- OPTION B: Open Bloom Stencil -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="card">
+    <span class="num">Option B</span>
+    <svg width="210" height="220" viewBox="0 0 210 220">
+      <!-- Stem -->
+      <path d="M105,190 C103,180 100,170 97,162" stroke="#4B1535" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+      <!-- Bottom leaf -->
+      <path d="M97,162 C80,170 60,162 55,148 C68,138 88,143 97,162Z" fill="#4B1535"/>
+      <path d="M97,162 C80,156 65,148 55,148" fill="none" stroke="#FBF6EF" stroke-width="1.8" stroke-linecap="round" opacity=".65"/>
+      <!-- Top-right stem -->
+      <path d="M148,66 C153,55 155,44 153,36" stroke="#4B1535" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- Top leaf 1 -->
+      <path d="M148,66 C160,58 166,44 163,34 C154,36 147,50 148,66Z" fill="#4B1535"/>
+      <path d="M148,66 C158,53 163,39 163,34" fill="none" stroke="#FBF6EF" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+      <!-- Top leaf 2 -->
+      <path d="M153,44 C158,32 167,24 171,22 C168,32 161,40 153,44Z" fill="#4B1535"/>
+
+      <!-- Rose head — slightly wider -->
+      <ellipse cx="103" cy="107" rx="74" ry="70" fill="#4B1535"/>
+
+      <!-- CARVED LINES — looser spiral, wider gaps between petals -->
+      <path d="M152,48 C180,80 174,128 148,154 C130,172 102,176 76,166"
+            fill="none" stroke="#FBF6EF" stroke-width="14" stroke-linecap="round"/>
+      <path d="M130,44 C156,72 152,118 130,144 C114,162 88,164 66,154"
+            fill="none" stroke="#FBF6EF" stroke-width="13" stroke-linecap="round"/>
+      <path d="M112,52 C136,78 132,116 114,138 C100,154 78,156 60,146"
+            fill="none" stroke="#FBF6EF" stroke-width="11" stroke-linecap="round"/>
+      <path d="M104,68 C122,90 118,118 104,134 C92,148 74,148 62,138"
+            fill="none" stroke="#FBF6EF" stroke-width="9" stroke-linecap="round"/>
+
+      <!-- Centre -->
+      <circle cx="88" cy="110" r="12" fill="#FBF6EF"/>
+      <circle cx="88" cy="110" r="6"  fill="#4B1535"/>
+    </svg>
+    <span class="name">Open Bloom Stencil</span>
+    <span class="desc">Wider gaps between carved lines show more of each petal — fuller, more open rose feeling</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- OPTION C: Layered Petal Silhouette -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="card">
+    <span class="num">Option C</span>
+    <svg width="210" height="220" viewBox="0 0 210 220">
+      <!-- Stem -->
+      <path d="M108,192 C106,182 104,172 102,163" stroke="#71557A" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <!-- Bottom leaf -->
+      <path d="M102,163 C86,172 66,165 62,150 C74,140 94,146 102,163Z" fill="#71557A"/>
+      <path d="M102,163 C86,157 70,149 62,150" fill="none" stroke="#FBF6EF" stroke-width="1.8" stroke-linecap="round" opacity=".65"/>
+      <!-- Top right stem -->
+      <path d="M150,70 C155,58 157,46 154,38" stroke="#71557A" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M150,70 C163,62 168,48 166,36 C156,38 149,52 150,70Z" fill="#71557A"/>
+      <path d="M150,70 C161,56 166,42 166,36" fill="none" stroke="#FBF6EF" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+      <path d="M154,48 C160,36 168,28 172,26 C169,36 162,44 154,48Z" fill="#71557A"/>
+
+      <!-- OUTER PETALS - individual filled shapes -->
+      <!-- Large outer petals as distinct shapes with gaps between them -->
+      <path d="M108,38 C130,36 152,50 160,72 C168,96 160,122 142,138 C124,154 98,158 76,148 C52,136 38,110 42,84 C46,58 66,38 92,36 C96,35 102,35 108,38Z" fill="#71557A"/>
+
+      <!-- Carved lines creating petal layering -->
+      <!-- Big outer swoop -->
+      <path d="M152,56 C172,84 164,124 140,148 C122,164 96,168 72,158"
+            fill="none" stroke="#FBF6EF" stroke-width="12" stroke-linecap="round"/>
+      <!-- Second -->
+      <path d="M132,48 C154,76 150,116 130,140 C114,158 88,160 68,150"
+            fill="none" stroke="#FBF6EF" stroke-width="10" stroke-linecap="round"/>
+      <!-- Third - bends more sharply inward -->
+      <path d="M116,56 C136,78 134,110 116,132 C104,148 82,150 64,140"
+            fill="none" stroke="#FBF6EF" stroke-width="9" stroke-linecap="round"/>
+      <!-- Inner petal boundary -->
+      <path d="M107,70 C124,90 120,116 106,132 C94,144 76,146 64,136"
+            fill="none" stroke="#FBF6EF" stroke-width="8" stroke-linecap="round"/>
+      <!-- Innermost tight curl -->
+      <path d="M103,84 C116,100 112,118 100,128 C90,136 76,136 68,128"
+            fill="none" stroke="#FBF6EF" stroke-width="7" stroke-linecap="round"/>
+
+      <!-- Guard petals — outer sepals visible on sides -->
+      <path d="M42,84 C36,96 36,110 42,122" fill="none" stroke="#FBF6EF" stroke-width="8" stroke-linecap="round"/>
+      <path d="M160,84 C166,96 166,112 160,124" fill="none" stroke="#FBF6EF" stroke-width="8" stroke-linecap="round"/>
+
+      <!-- Centre -->
+      <circle cx="88" cy="106" r="10" fill="#FBF6EF"/>
+      <circle cx="88" cy="106" r="5"  fill="#71557A"/>
+    </svg>
+    <span class="name">Layered Petal Silhouette</span>
+    <span class="desc">Distinct outer guard petals visible on the sides, with a tighter inner spiral — richer depth</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- OPTION D: Bold Minimal Tattoo -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="card">
+    <span class="num">Option D</span>
+    <svg width="210" height="220" viewBox="0 0 210 220">
+      <!-- Stem -->
+      <path d="M108,194 C106,182 103,170 100,160" stroke="#6B1A32" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <!-- Bottom leaf - large -->
+      <path d="M100,160 C80,170 56,162 50,146 C64,134 88,140 100,160Z" fill="#6B1A32"/>
+      <path d="M100,160 C80,154 63,145 50,146" fill="none" stroke="#FBF6EF" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <!-- Thorns on stem -->
+      <path d="M100,178 C96,173 90,173 88,175" fill="none" stroke="#6B1A32" stroke-width="3" stroke-linecap="round"/>
+      <!-- Top right stem & leaves -->
+      <path d="M152,70 C158,56 160,44 157,34" stroke="#6B1A32" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <path d="M152,70 C166,60 172,46 169,34 C158,36 151,52 152,70Z" fill="#6B1A32"/>
+      <path d="M152,70 C164,57 169,44 169,34" fill="none" stroke="#FBF6EF" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+      <path d="M156,48 C162,34 172,26 176,22 C172,34 165,43 156,48Z" fill="#6B1A32"/>
+      <path d="M156,48 C163,36 172,28 176,22" fill="none" stroke="#FBF6EF" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+
+      <!-- OUTER PETAL SHAPES — very large, bold, few lines -->
+      <!-- Big outer sweeping petal (top right area) -->
+      <path d="M104,36 C132,32 158,46 170,74 C182,104 174,140 152,160 C130,180 100,184 74,172 C46,158 30,128 34,98 C38,68 58,42 86,36 C92,34 98,34 104,36Z" fill="#6B1A32"/>
+
+      <!-- Just 3 BOLD carved lines — very thick, very graphic -->
+      <path d="M158,58 C184,90 174,134 148,158 C128,174 100,178 72,166"
+            fill="none" stroke="#FBF6EF" stroke-width="16" stroke-linecap="round"/>
+      <path d="M132,46 C160,78 156,124 132,150 C114,168 86,170 62,158"
+            fill="none" stroke="#FBF6EF" stroke-width="14" stroke-linecap="round"/>
+      <path d="M110,56 C136,82 134,118 114,142 C100,158 78,160 58,148"
+            fill="none" stroke="#FBF6EF" stroke-width="12" stroke-linecap="round"/>
+
+      <!-- Inner petal curl — one tight swoop -->
+      <path d="M103,74 C124,96 120,122 104,138 C92,150 74,150 62,140"
+            fill="none" stroke="#FBF6EF" stroke-width="10" stroke-linecap="round"/>
+
+      <!-- Centre - larger, bolder -->
+      <circle cx="88" cy="110" r="14" fill="#FBF6EF"/>
+      <circle cx="88" cy="110" r="7"  fill="#6B1A32"/>
+    </svg>
+    <span class="name">Bold Minimal Tattoo</span>
+    <span class="desc">Fewer, much thicker carved lines — very dramatic, high-contrast graphic quality like a woodcut print</span>
+  </div>
+
+</div>
+</body>
+</html>
