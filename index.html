@@ -550,6 +550,82 @@
       font-size:1.18rem; font-style:italic;
       color:rgba(247,194,202,.6); letter-spacing:.22em;
     }
+
+    /* ── Responsive: Tablet (≤900px) ────────────────────────────── */
+    @media (max-width:900px) {
+      /* Landing page */
+      .envelope-wrapper { transform:scale(.88); }
+
+      /* Back button */
+      .port-back { top:16px; left:16px; font-size:.76rem; padding:7px 16px; }
+
+      /* Sections */
+      .port-section { padding:60px 48px; }
+      .port-footer   { padding:48px 48px; }
+
+      /* Project grid — 2 cols */
+      .port-grid { grid-template-columns:repeat(2,1fr); }
+
+      /* Services grid — 2 cols */
+      .port-svc-grid { grid-template-columns:repeat(2,1fr); }
+
+      /* Gallery cols3 → 2 on tablet */
+      .proj-modal-gallery.cols3 { grid-template-columns:repeat(2,1fr); }
+
+      /* Row gallery wraps on tablet */
+      .proj-gallery-row { flex-wrap:wrap; }
+      .proj-gallery-row > div { flex:1 1 calc(50% - 5px); min-width:calc(50% - 5px); }
+
+      /* Modal */
+      .proj-modal { padding:40px 36px 36px; }
+    }
+
+    /* ── Responsive: Mobile (≤600px) ────────────────────────────── */
+    @media (max-width:600px) {
+      /* Landing page */
+      .envelope-wrapper { transform:scale(.72); transform-origin:center center; }
+
+      /* Back button */
+      .port-back { top:12px; left:12px; font-size:.68rem; padding:6px 12px; letter-spacing:.18em; }
+
+      /* Hero */
+      .port-hero { padding:80px 20px 48px; }
+      .port-ghost span { font-size:clamp(28px,14vw,64px); }
+
+      /* Sections */
+      .port-section { padding:44px 22px; }
+      .port-footer   { padding:36px 22px; font-size:1rem; }
+
+      /* Project grid — 1 col */
+      .port-grid { grid-template-columns:1fr; }
+
+      /* Services grid — 1 col */
+      .port-svc-grid { grid-template-columns:1fr; }
+
+      /* Testimonial */
+      .port-testimonial { padding:24px 20px 24px 28px; }
+
+      /* Modal — full screen feel */
+      .proj-modal {
+        width:96vw; padding:32px 20px 28px;
+        max-height:92vh;
+      }
+
+      /* Gallery: all single column on mobile */
+      .proj-modal-gallery,
+      .proj-modal-gallery.cols3 { grid-template-columns:1fr; }
+      .proj-modal-gallery.contain img { height:240px; }
+
+      /* Row gallery stacks on mobile */
+      .proj-gallery-row { flex-direction:column; }
+      .proj-gallery-row > div { flex:1 1 100%; min-width:100%; }
+
+      /* Collab button */
+      .port-collab-btn { font-size:.7rem; padding:11px 24px; }
+
+      /* Email popup */
+      .port-email-popup { white-space:normal; width:220px; text-align:center; }
+    }
   </style>
 </head>
 <body>
