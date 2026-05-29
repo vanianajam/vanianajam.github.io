@@ -600,7 +600,11 @@
 
       /* Hero */
       .port-hero { padding:80px 20px 48px; }
-      .port-ghost span { font-size:clamp(28px,14vw,64px); }
+      /* Pull ghost text in so Creative & Portfolio stay on screen */
+      .port-ghost { gap: clamp(20px, 8vw, 80px); }
+      .port-ghost span { font-size:clamp(28px,9vw,52px); }
+      /* Centre-align role subtitle */
+      .port-role { text-align:center; letter-spacing:.15em; }
 
       /* Sections */
       .port-section { padding:44px 22px; }
