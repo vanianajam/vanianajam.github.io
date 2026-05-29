@@ -624,7 +624,11 @@
       .port-section-lt .port-skill { background:#f7c2ca; color:#250e2c; border-color:#f7c2ca; }
 
       /* Project grid — 2 cols on mobile */
-      .port-grid { grid-template-columns:repeat(2,1fr); }
+      .port-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+      /* Cards: hide subtitle, reduce height */
+      .port-card { height:clamp(100px,28vw,150px); padding:16px 10px; font-size:.72rem; letter-spacing:.15em; }
+      .port-card-sub { display:none; }
+      .port-card-icon { font-size:1.3rem; }
 
       /* Services grid — 1 col */
       .port-svc-grid { grid-template-columns:1fr; }
@@ -634,8 +638,14 @@
 
       /* Modal — full screen feel */
       .proj-modal {
-        width:96vw; padding:32px 20px 28px;
+        width:96vw; padding:16px 16px 28px;
         max-height:92vh;
+      }
+      /* Close button — sticky so it stays visible while scrolling */
+      .proj-modal-close {
+        position:sticky; top:0; float:right; clear:right;
+        background:rgba(251,246,239,.95); border-radius:4px;
+        padding:6px 12px; opacity:1; z-index:10;
       }
 
       /* Gallery: all single column on mobile */
