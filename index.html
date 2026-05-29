@@ -582,8 +582,18 @@
 
     /* ── Responsive: Mobile (≤600px) ────────────────────────────── */
     @media (max-width:600px) {
-      /* Landing page */
-      .envelope-wrapper { transform:scale(.72); transform-origin:center center; }
+      /* Landing page — name centered, single line */
+      .name-text {
+        font-size: clamp(1.4rem, 6.5vw, 2rem);
+        letter-spacing: .1em;
+        text-align: center;
+        white-space: nowrap;
+      }
+      /* Flowers — cap size so top cluster doesn't overlap */
+      .rg { max-width: 72px !important; }
+
+      /* Envelope wrapper — slight scale down */
+      .envelope-wrapper { transform:scale(.82); transform-origin:center center; }
 
       /* Back button */
       .port-back { top:12px; left:12px; font-size:.68rem; padding:6px 12px; letter-spacing:.18em; }
