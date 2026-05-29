@@ -550,6 +550,7 @@
       font-family:'Cormorant Garamond',Georgia,serif;
       font-size:1.18rem; font-style:italic;
       color:rgba(247,194,202,.6); letter-spacing:.22em;
+      line-height:2;
     }
 
     /* ── Responsive: Tablet (≤900px) ────────────────────────────── */
@@ -622,8 +623,8 @@
       .port-skill { background:#4B1535; color:#FBF6EF; border-color:#4B1535; }
       .port-section-lt .port-skill { background:#f7c2ca; color:#250e2c; border-color:#f7c2ca; }
 
-      /* Project grid — 1 col */
-      .port-grid { grid-template-columns:1fr; }
+      /* Project grid — 2 cols on mobile */
+      .port-grid { grid-template-columns:repeat(2,1fr); }
 
       /* Services grid — 1 col */
       .port-svc-grid { grid-template-columns:1fr; }
@@ -1209,6 +1210,14 @@
         Canvas.savvy Paintings
         <span class="port-card-sub">Handmade Art &mdash; bespoke acrylic paintings, embroidery &amp; textured mixed-media pieces</span>
       </div>
+      <div class="port-card proj-clickable" style="cursor:pointer"
+        data-icon="💻" data-type="Web Design & Development" data-title="Personal Portfolio Website"
+        data-desc="Designed and developed this fully functional personal portfolio website from scratch — a single-page HTML/CSS/JS experience featuring animated transitions, a custom gradient background, project modals with image galleries, a lightbox viewer, responsive mobile layout, and a live deployment on GitHub Pages. Every element crafted to reflect a unique creative identity."
+        data-tags="Web Design,HTML,CSS,JavaScript,Responsive Design,GitHub Pages">
+        <span class="port-card-icon">💻</span>
+        Personal Portfolio Website
+        <span class="port-card-sub">Web Design &amp; Development &mdash; this site, built from scratch with HTML, CSS &amp; JS</span>
+      </div>
     </div>
   </section>
 
@@ -1242,7 +1251,9 @@
   </section>
 
   <footer class="port-footer">
-    vanianajam@gmail.com &nbsp;&middot;&nbsp; Kuala Lumpur, Malaysia &nbsp;&middot;&nbsp; Islamabad, Pakistan
+    vanianajam@gmail.com<br>
+    Kuala Lumpur, Malaysia<br>
+    Islamabad, Pakistan
   </footer>
 
   </div><!-- /.port-bg-wrap -->
