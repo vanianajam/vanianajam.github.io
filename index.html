@@ -591,8 +591,15 @@
         text-align: center;
         white-space: nowrap;
       }
-      /* Flowers — cap size so top cluster doesn't overlap */
-      .rg { max-width: 72px !important; }
+      /* Hide 2 of the tightest top-cluster flowers to stop overlap */
+      .rose-scene > div:nth-child(2),
+      .rose-scene > div:nth-child(4) { display:none; }
+      /* Varied flower sizes for visual interest */
+      .rg      { max-width: 62px  !important; }
+      .rg.fa   { max-width: 95px  !important; }
+      .rg.fc   { max-width: 88px  !important; }
+      .rg.fe   { max-width: 78px  !important; }
+      .rg.ff   { max-width: 70px  !important; }
 
       /* Envelope wrapper — slight scale down */
       .envelope-wrapper { transform:scale(.82); transform-origin:center center; }
