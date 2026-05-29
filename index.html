@@ -648,14 +648,14 @@
         padding:6px 12px; opacity:1; z-index:10;
       }
 
-      /* Gallery: all single column on mobile */
-      .proj-modal-gallery,
-      .proj-modal-gallery.cols3 { grid-template-columns:1fr; }
-      .proj-modal-gallery.contain img { height:240px; }
+      /* Gallery: 2 cols on mobile (default + cols3) */
+      .proj-modal-gallery { grid-template-columns:repeat(2,1fr); }
+      .proj-modal-gallery.cols3 { grid-template-columns:repeat(2,1fr); }
+      .proj-modal-gallery.contain img { height:200px; }
 
-      /* Row gallery stacks on mobile */
-      .proj-gallery-row { flex-direction:column; }
-      .proj-gallery-row > div { flex:1 1 100%; min-width:100%; }
+      /* Row-grouped gallery: keep row layout as-is (3-2-2-3 stays intact) */
+      .proj-gallery-row { flex-wrap:wrap; }
+      .proj-gallery-row > div { flex:1 1 calc(33.33% - 8px); min-width:calc(33.33% - 8px); }
 
       /* Collab button */
       .port-collab-btn { font-size:.7rem; padding:11px 24px; }
