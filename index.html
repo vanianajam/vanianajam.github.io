@@ -481,6 +481,9 @@
     .proj-modal-gallery.contain img {
       height:380px; object-fit:contain;
     }
+    .proj-modal-gallery.cover img {
+      height:280px; object-fit:cover;
+    }
     /* Last image spans full row when alone in a 2-col grid (odd total count) */
     .proj-modal-gallery:not(.cols3) > div:last-child:nth-child(odd) {
       grid-column: 1 / -1;
@@ -659,6 +662,7 @@
       .proj-modal-gallery { grid-template-columns:repeat(2,1fr); }
       .proj-modal-gallery.cols3 { grid-template-columns:repeat(2,1fr); }
       .proj-modal-gallery.contain img { height:200px; }
+      .proj-modal-gallery.cover img { height:180px; }
 
       /* Row-grouped gallery: keep row layout as-is (3-2-2-3 stays intact) */
       .proj-gallery-row { flex-wrap:wrap; }
@@ -1018,6 +1022,19 @@
   <section class="port-section" style="padding-top:0">
     <h2 class="port-heading">Services</h2>
 
+    <!-- Dentistry & Research -->
+    <div class="port-svc-group">
+      <h3 class="port-tname">Dentistry &amp; Research</h3>
+      <div class="port-services">
+        <span class="port-pill">Clinical Dentistry</span>
+        <span class="port-pill">Dental Education Content</span>
+        <span class="port-pill">Dental Research &amp; Writing</span>
+        <span class="port-pill">Research</span>
+        <span class="port-pill">Proofreading</span>
+        <span class="port-pill">Creative Project Management</span>
+      </div>
+    </div>
+
     <!-- Design & Visual Arts -->
     <div class="port-svc-group">
       <h3 class="port-tname">Design &amp; Visual Arts</h3>
@@ -1046,25 +1063,19 @@
       </div>
     </div>
 
-    <!-- Dentistry & Research -->
-    <div class="port-svc-group">
-      <h3 class="port-tname">Dentistry &amp; Research</h3>
-      <div class="port-services">
-        <span class="port-pill">Clinical Dentistry</span>
-        <span class="port-pill">Dental Education Content</span>
-        <span class="port-pill">Dental Research &amp; Writing</span>
-        <span class="port-pill">Research</span>
-        <span class="port-pill">Proofreading</span>
-        <span class="port-pill">Creative Project Management</span>
-      </div>
-    </div>
-
   </section>
 
   <!-- ── Experience ─────────────────────────────────── -->
   <section class="port-section" style="padding-top:0">
     <h2 class="port-heading">Experience</h2>
     <div class="port-timeline">
+
+      <div class="port-titem">
+        <p class="port-tdate">May 2026 &ndash; Present</p>
+        <p class="port-tname">Graduate Research Assistant</p>
+        <p class="port-torg">University Malaya (UM) &mdash; Kuala Lumpur, Malaysia</p>
+        <p class="port-tdesc">Full-time research role specialising in paediatric dentistry, AI model training, image annotation, and Claude Code — contributing to cutting-edge research at the intersection of clinical dentistry and artificial intelligence.</p>
+      </div>
 
       <div class="port-titem">
         <p class="port-tdate">Jul 2025 &ndash; Oct 2025</p>
@@ -1137,6 +1148,30 @@
         <p class="port-tdesc">Foundation years that nurtured both academic rigour and early creative interests.</p>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ── Achievements ─────────────────────────────────── -->
+  <section class="port-section" style="padding-top:0">
+    <span class="port-label">Recognition</span>
+    <h2 class="port-heading">Achievements</h2>
+
+    <div style="margin-top:32px">
+      <div class="port-card proj-clickable"
+        style="cursor:pointer;height:auto;padding:30px 28px;align-items:flex-start;gap:14px;max-width:640px;text-align:left"
+        data-icon="🏆"
+        data-type="Competition Award"
+        data-title="URIIS 2026 — Consolation Prize"
+        data-desc="Competed in the Student Biz Innov Challenge at the University Research &amp; Innovation Investment Summit (URIIS 2026), held at the World Trade Centre, Kuala Lumpur, 21–23 September 2026. Among 82 participants, VAI Studio placed in the Top 10 and was awarded the Consolation Prize — a national recognition organised by KolaXus in collaboration with Malaysia's Ministry of Higher Education."
+        data-tags="Innovation,Entrepreneurship,Top 10,Consolation Prize,URIIS 2026,Malaysia,KolaXus"
+        data-fit="cover"
+        data-images="uriis/WhatsApp Image 2026-10-01 at 4.02.23 PM (1).jpeg|At URIIS 2026|uriis/WhatsApp Image 2026-10-01 at 4.02.23 PM.jpeg|Q&amp;A Session|uriis/uriis26-consolation-certificate.jpg|Consolation Prize|uriis/WhatsApp Image 2026-10-01 at 4.02.36 PM.jpeg|Certificate of Achievement">
+        <span class="port-card-icon" style="font-size:2rem;opacity:.85">🏆</span>
+        <div>
+          <div style="font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px">URIIS 2026 &mdash; Consolation Prize Winner</div>
+          <p class="port-card-sub" style="display:block;font-size:1.04rem">Student Biz Innov Challenge &mdash; Top 10 of 82 participants &mdash; World Trade Centre, Kuala Lumpur</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1556,7 +1591,7 @@
         var parts = d.images.split('|');
         var imgCount = Math.ceil(parts.length / 2);
         var colsClass = d.cols ? ' cols'+d.cols : (imgCount === 1 ? ' single' : '');
-        var fitClass = d.fit === 'contain' ? ' contain' : '';
+        var fitClass = d.fit ? ' ' + d.fit : '';
         galleryEl.className = 'proj-modal-gallery' + colsClass + fitClass;
         for (var i = 0; i < parts.length; i += 2) {
           var wrap = document.createElement('div');
