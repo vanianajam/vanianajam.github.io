@@ -521,12 +521,12 @@
       border-color:#4B1535; box-shadow:0 8px 28px rgba(75,21,53,.3);
     }
     .port-email-popup {
-      position:absolute; z-index:10;
+      position:fixed; z-index:10000;
       background:linear-gradient(135deg,#FBF6EF 0%,#F0E7DA 100%);
       border:1px solid rgba(75,21,53,.18); border-radius:10px;
       padding:18px 28px; text-align:center;
       box-shadow:0 12px 36px rgba(75,21,53,.22);
-      top:calc(100% + 14px); left:50%; transform:translateX(-50%) scale(.92);
+      transform:translateX(-50%) scale(.92);
       opacity:0; pointer-events:none;
       transition:opacity .22s ease, transform .22s ease;
       white-space:nowrap;
@@ -1558,7 +1558,11 @@
   /* ── Email popup ─────────────────────────────────── */
   function toggleEmailPopup(e) {
     e.stopPropagation();
-    document.getElementById('emailPopup').classList.toggle('visible');
+    var popup = document.getElementById('emailPopup');
+    var rect = e.currentTarget.getBoundingClientRect();
+    popup.style.top  = (rect.bottom + 14) + 'px';
+    popup.style.left = (rect.left + rect.width / 2) + 'px';
+    popup.classList.toggle('visible');
   }
   document.addEventListener('click', function(e) {
     var popup = document.getElementById('emailPopup');
