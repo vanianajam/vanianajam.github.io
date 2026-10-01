@@ -347,7 +347,16 @@
       content:''; position:absolute; left:0; top:8px; bottom:8px;
       width:1px; background:linear-gradient(to bottom,#4B1535,rgba(75,21,53,.1));
     }
-    .port-titem { position:relative; margin-bottom:32px; }
+    .port-titem { position:relative; margin-bottom:32px; display:flex; gap:16px; align-items:flex-start; }
+    .port-titem-body { flex:1; min-width:0; }
+    .port-tlogo {
+      width:48px; height:48px; border-radius:50%;
+      object-fit:cover; object-position:center; flex-shrink:0;
+      margin-top:2px; border:2px solid rgba(75,21,53,.15);
+      box-shadow:0 2px 10px rgba(75,21,53,.14);
+      background:#f7f0f5;
+    }
+    .port-tlogo.logo-wide { object-position:left center; }
     .port-titem::before {
       content:''; position:absolute; left:-28px; top:7px;
       width:8px; height:8px; border-radius:50%;
@@ -674,6 +683,7 @@
 
       /* Collab button */
       .port-collab-btn { font-size:.68rem; padding:10px 22px; }
+      .port-tlogo { width:36px; height:36px; }
       .port-email-popup { white-space:normal; width:210px; text-align:center; }
     }
 
@@ -1096,45 +1106,63 @@
     <div class="port-timeline">
 
       <div class="port-titem">
-        <p class="port-tdate">May 2026 &ndash; Present</p>
-        <p class="port-tname">Graduate Research Assistant</p>
-        <p class="port-torg">University Malaya (UM) &mdash; Kuala Lumpur, Malaysia</p>
-        <p class="port-tdesc">Full-time research role specialising in paediatric dentistry, AI model training, image annotation, and Claude Code — contributing to cutting-edge research at the intersection of clinical dentistry and artificial intelligence.</p>
+        <img class="port-tlogo logo-wide" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (7).jpeg" alt="University Malaya">
+        <div class="port-titem-body">
+          <p class="port-tdate">May 2026 &ndash; Present</p>
+          <p class="port-tname">Graduate Research Assistant</p>
+          <p class="port-torg">University Malaya (UM) &mdash; Kuala Lumpur, Malaysia</p>
+          <p class="port-tdesc">Full-time research role specialising in paediatric dentistry, AI model training, image annotation, and Claude Code — contributing to cutting-edge research at the intersection of clinical dentistry and artificial intelligence.</p>
+        </div>
       </div>
 
       <div class="port-titem">
-        <p class="port-tdate">Jul 2025 &ndash; Oct 2025</p>
-        <p class="port-tname">Freelance Collaborator</p>
-        <p class="port-torg">Drew Binsky LLC &mdash; Remote, Arizona, USA</p>
-        <p class="port-tdesc">Created online graphics and visual content for one of the world&rsquo;s most-watched travel creators. Worked remotely across time zones delivering polished, on-brand digital assets.</p>
+        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM.jpeg" alt="Drew Binsky">
+        <div class="port-titem-body">
+          <p class="port-tdate">Jul 2025 &ndash; Oct 2025</p>
+          <p class="port-tname">Freelance Collaborator</p>
+          <p class="port-torg">Drew Binsky LLC &mdash; Remote, Arizona, USA</p>
+          <p class="port-tdesc">Created online graphics and visual content for one of the world&rsquo;s most-watched travel creators. Worked remotely across time zones delivering polished, on-brand digital assets.</p>
+        </div>
       </div>
 
       <div class="port-titem">
-        <p class="port-tdate">Apr 2021 &ndash; Present</p>
-        <p class="port-tname">Founder &amp; Owner</p>
-        <p class="port-torg">Canvas.savvy &mdash; Islamabad, Pakistan</p>
-        <p class="port-tdesc">Built a self-run creative studio producing bespoke handmade art &mdash; acrylic paintings, embroidery, and textured pieces &mdash; crafted to order for clients. A passion project turned business that blends emotion, craft, and artistry.</p>
+        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (6).jpeg" alt="Canvas.savvy">
+        <div class="port-titem-body">
+          <p class="port-tdate">Apr 2021 &ndash; Present</p>
+          <p class="port-tname">Founder &amp; Owner</p>
+          <p class="port-torg">Canvas.savvy &mdash; Islamabad, Pakistan</p>
+          <p class="port-tdesc">Built a self-run creative studio producing bespoke handmade art &mdash; acrylic paintings, embroidery, and textured pieces &mdash; crafted to order for clients. A passion project turned business that blends emotion, craft, and artistry.</p>
+        </div>
       </div>
 
       <div class="port-titem">
-        <p class="port-tdate">Oct 2024 &ndash; Nov 2024</p>
-        <p class="port-tname">General Dentist</p>
-        <p class="port-torg">Defence Dental Clinic &mdash; Islamabad, Pakistan</p>
-        <p class="port-tdesc">Part-time clinical practice with a focus on patient care and appointment management.</p>
+        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (4).jpeg" alt="Defence Dental Clinic">
+        <div class="port-titem-body">
+          <p class="port-tdate">Oct 2024 &ndash; Nov 2024</p>
+          <p class="port-tname">General Dentist</p>
+          <p class="port-torg">Defence Dental Clinic &mdash; Islamabad, Pakistan</p>
+          <p class="port-tdesc">Part-time clinical practice with a focus on patient care and appointment management.</p>
+        </div>
       </div>
 
       <div class="port-titem">
-        <p class="port-tdate">Mar 2023 &ndash; Apr 2024</p>
-        <p class="port-tname">General Dentist</p>
-        <p class="port-torg">Dental Care &mdash; Rawalpindi, Pakistan</p>
-        <p class="port-tdesc">Provided comprehensive dental treatment with a strong focus on patient education and clinical excellence.</p>
+        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (3).jpeg" alt="Dental Care">
+        <div class="port-titem-body">
+          <p class="port-tdate">Mar 2023 &ndash; Apr 2024</p>
+          <p class="port-tname">General Dentist</p>
+          <p class="port-torg">Dental Care &mdash; Rawalpindi, Pakistan</p>
+          <p class="port-tdesc">Provided comprehensive dental treatment with a strong focus on patient education and clinical excellence.</p>
+        </div>
       </div>
 
       <div class="port-titem">
-        <p class="port-tdate">Jan 2022 &ndash; Jan 2023</p>
-        <p class="port-tname">House Officer</p>
-        <p class="port-torg">Armed Forces Institute of Dentistry (AFID) &mdash; Rawalpindi</p>
-        <p class="port-tdesc">Full-time clinical house officer role covering all dental specialities in one of Pakistan&rsquo;s leading military medical institutions.</p>
+        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (5).jpeg" alt="AFID">
+        <div class="port-titem-body">
+          <p class="port-tdate">Jan 2022 &ndash; Jan 2023</p>
+          <p class="port-tname">House Officer</p>
+          <p class="port-torg">Armed Forces Institute of Dentistry (AFID) &mdash; Rawalpindi</p>
+          <p class="port-tdesc">Full-time clinical house officer role covering all dental specialities in one of Pakistan&rsquo;s leading military medical institutions.</p>
+        </div>
       </div>
 
     </div>
@@ -1146,31 +1174,42 @@
     <div class="port-timeline">
 
       <div class="port-titem">
-        <p class="port-tdate">2025 &ndash; Present</p>
-        <p class="port-tname">MDSC &mdash; Masters of Dental Science</p>
-        <p class="port-torg">University Malaya (UM) &mdash; Kuala Lumpur, Malaysia</p>
-        <p class="port-tdesc">Ongoing postgraduate research degree in dental science, deepening clinical expertise while continuing to grow as a creative professional in Malaysia.</p>
+        <img class="port-tlogo logo-wide" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (7).jpeg" alt="University Malaya">
+        <div class="port-titem-body">
+          <p class="port-tdate">2025 &ndash; Present</p>
+          <p class="port-tname">MDSC &mdash; Masters of Dental Science</p>
+          <p class="port-torg">University Malaya (UM) &mdash; Kuala Lumpur, Malaysia</p>
+          <p class="port-tdesc">Ongoing postgraduate research degree in dental science, deepening clinical expertise while continuing to grow as a creative professional in Malaysia.</p>
+        </div>
       </div>
 
       <div class="port-titem">
-        <p class="port-tdate">2017 &ndash; 2021</p>
-        <p class="port-tname">BDS &mdash; Bachelor of Dental Surgery</p>
-        <p class="port-torg">Army Medical College (AMC) &mdash; Rawalpindi, Pakistan</p>
-        <p class="port-tdesc">Professional degree in dentistry that sharpened my eye for detail and refined my problem-solving abilities &mdash; skills that seamlessly translate into every design project I take on.</p>
+        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (2).jpeg" alt="Army Medical College">
+        <div class="port-titem-body">
+          <p class="port-tdate">2017 &ndash; 2021</p>
+          <p class="port-tname">BDS &mdash; Bachelor of Dental Surgery</p>
+          <p class="port-torg">Army Medical College (AMC) &mdash; Rawalpindi, Pakistan</p>
+          <p class="port-tdesc">Professional degree in dentistry that sharpened my eye for detail and refined my problem-solving abilities &mdash; skills that seamlessly translate into every design project I take on.</p>
+        </div>
       </div>
 
       <div class="port-titem">
-        <p class="port-tdate">Self-taught</p>
-        <p class="port-tname">Photography &amp; Graphic Design</p>
-        <p class="port-torg">Independent &mdash; Online Resources</p>
-        <p class="port-tdesc">Developed photography and graphic design skills through self-driven learning. This journey has equipped me with a diverse skill set and a deep understanding of design principles, allowing me to approach each project with both technical expertise and creative confidence.</p>
+        <div class="port-titem-body">
+          <p class="port-tdate">Self-taught</p>
+          <p class="port-tname">Photography &amp; Graphic Design</p>
+          <p class="port-torg">Independent &mdash; Online Resources</p>
+          <p class="port-tdesc">Developed photography and graphic design skills through self-driven learning. This journey has equipped me with a diverse skill set and a deep understanding of design principles, allowing me to approach each project with both technical expertise and creative confidence.</p>
+        </div>
       </div>
 
       <div class="port-titem">
-        <p class="port-tdate">2005 &ndash; 2017</p>
-        <p class="port-tname">School &amp; College</p>
-        <p class="port-torg">Army Public School &mdash; APSACS</p>
-        <p class="port-tdesc">Foundation years that nurtured both academic rigour and early creative interests.</p>
+        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (1).jpeg" alt="APSACS">
+        <div class="port-titem-body">
+          <p class="port-tdate">2005 &ndash; 2017</p>
+          <p class="port-tname">School &amp; College</p>
+          <p class="port-torg">Army Public School &mdash; APSACS</p>
+          <p class="port-tdesc">Foundation years that nurtured both academic rigour and early creative interests.</p>
+        </div>
       </div>
 
     </div>
