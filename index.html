@@ -350,16 +350,15 @@
     .port-titem { position:relative; margin-bottom:32px; display:flex; gap:16px; align-items:flex-start; }
     .port-titem-body { flex:1; min-width:0; }
     .port-tlogo {
-      width:48px; height:48px; border-radius:50%;
-      object-fit:cover; object-position:center; flex-shrink:0;
-      margin-top:2px; border:2px solid rgba(75,21,53,.15);
-      box-shadow:0 2px 10px rgba(75,21,53,.14);
-      background:#f7f0f5;
+      width:96px; height:96px;
+      object-fit:contain; object-position:center; flex-shrink:0;
+      margin-top:2px;
+      filter:drop-shadow(0 2px 6px rgba(75,21,53,.18));
     }
-    .port-tlogo.logo-wide {
-      width:110px; height:44px; border-radius:8px;
-      object-fit:contain; object-position:center;
-    }
+    .port-tlogo[alt="Drew Binsky"] { filter:drop-shadow(0 1px 3px rgba(75,21,53,.5)); }
+    /* Its circle fills only ~72% of the PNG; scale it up to match the others
+       without changing the slot size, so the text column stays aligned. */
+    .port-tlogo[src$="photography and edit.png"] { transform:scale(1.38); }
     .port-titem::before {
       content:''; position:absolute; left:-28px; top:7px;
       width:8px; height:8px; border-radius:50%;
@@ -399,20 +398,41 @@
     }
     .port-marquee-track {
       display:flex; width:max-content;
-      animation:marquee-scroll 36s linear infinite;
+      animation:marquee-scroll 70s linear infinite;
     }
     .port-marquee-track:hover { animation-play-state:paused; }
     .port-marquee-set {
-      display:flex; gap:28px; padding-right:28px;
+      display:flex; align-items:center; gap:48px; padding-right:48px;
     }
+    /* --logo-h is the height of each logo's visible artwork. fitMarqueeLogos()
+       measures where the artwork sits inside each PNG and sets the ratios
+       below, so the img is scaled to that height and its transparent padding
+       is trimmed off with negative margins — every logo then gets the same
+       height and the same gap, whatever empty space its file has. */
+    .port-marquee-wrap { --logo-h:74px; }
     .port-marquee-item {
-      width:72px; height:72px; border-radius:50%; flex-shrink:0;
-      border:2px solid rgba(75,21,53,.2);
-      overflow:hidden; background:#fff;
-      box-shadow:0 2px 10px rgba(75,21,53,.1);
+      height:var(--logo-h); flex-shrink:0;
+      display:flex; align-items:center;
     }
     .port-marquee-item img {
-      width:100%; height:100%; object-fit:contain; display:block;
+      --k:1;   /* <1 shrinks very wide wordmarks */
+      --size:1; /* per-logo visual tweak, set below */
+      --iy:1;  /* artwork height ÷ image height */
+      --pt:0; --pr:0; --pb:0; --pl:0;  /* padding, in artwork heights */
+      display:block; width:auto; max-width:none;
+      height:calc(var(--logo-h) * var(--size) * var(--k) / var(--iy));
+      margin:
+        calc(var(--logo-h) * var(--size) * var(--k) * var(--pt) * -1)
+        calc(var(--logo-h) * var(--size) * var(--k) * var(--pr) * -1)
+        calc(var(--logo-h) * var(--size) * var(--k) * var(--pb) * -1)
+        calc(var(--logo-h) * var(--size) * var(--k) * var(--pl) * -1);
+      filter:drop-shadow(0 3px 8px rgba(75,21,53,.18));
+    }
+    /* Its wide wordmark reads heavier than the round crests at equal height */
+    .port-marquee-item img[alt="University Malaya"] { --size:.9; }
+    /* White wordmark: a firmer shadow keeps it legible on the pink */
+    .port-marquee-item img[alt="Drew Binsky"] {
+      filter:drop-shadow(0 1px 3px rgba(75,21,53,.5));
     }
 
     /* Skills tags */
@@ -714,7 +734,8 @@
 
       /* Collab button */
       .port-collab-btn { font-size:.68rem; padding:10px 22px; }
-      .port-tlogo { width:36px; height:36px; }
+      .port-tlogo { width:72px; height:72px; }
+      .port-marquee-wrap { --logo-h:55px; }
       .port-email-popup { white-space:normal; width:210px; text-align:center; }
     }
 
@@ -1073,52 +1094,52 @@
   <div class="port-marquee-wrap">
     <div class="port-marquee-track">
       <div class="port-marquee-set">
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (7).jpeg" alt="University Malaya"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM.jpeg" alt="Drew Binsky"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (6).jpeg" alt="Canvas.savvy"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (4).jpeg" alt="DMDC"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (3).jpeg" alt="Dental Care"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (5).jpeg" alt="AFID"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (2).jpeg" alt="Army Medical College"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (1).jpeg" alt="APSACS"></div>
+        <div class="port-marquee-item"><img src="logos/University Malaya.png" alt="University Malaya"></div>
+        <div class="port-marquee-item"><img src="logos/Drew binsky.png" alt="Drew Binsky"></div>
+        <div class="port-marquee-item"><img src="logos/canvas savvy.png" alt="Canvas.savvy"></div>
+        <div class="port-marquee-item"><img src="logos/defence dental.png" alt="DMDC"></div>
+        <div class="port-marquee-item"><img src="logos/dental care.png" alt="Dental Care"></div>
+        <div class="port-marquee-item"><img src="logos/Afid.png" alt="AFID"></div>
+        <div class="port-marquee-item"><img src="logos/Army medical college.png" alt="Army Medical College"></div>
+        <div class="port-marquee-item"><img src="logos/APSACS.png" alt="APSACS"></div>
         <div class="port-marquee-item"><img src="logos/uriis.png" alt="URIIS 2026"></div>
-        <div class="port-marquee-item"><img src="logos/kolaxus.png" alt="KolaXus"></div>
+        <div class="port-marquee-item"><img src="logos/kolaxus.png" alt="Kolaxus"></div>
       </div>
       <div class="port-marquee-set" aria-hidden="true">
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (7).jpeg" alt="University Malaya"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM.jpeg" alt="Drew Binsky"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (6).jpeg" alt="Canvas.savvy"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (4).jpeg" alt="DMDC"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (3).jpeg" alt="Dental Care"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (5).jpeg" alt="AFID"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (2).jpeg" alt="Army Medical College"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (1).jpeg" alt="APSACS"></div>
+        <div class="port-marquee-item"><img src="logos/University Malaya.png" alt="University Malaya"></div>
+        <div class="port-marquee-item"><img src="logos/Drew binsky.png" alt="Drew Binsky"></div>
+        <div class="port-marquee-item"><img src="logos/canvas savvy.png" alt="Canvas.savvy"></div>
+        <div class="port-marquee-item"><img src="logos/defence dental.png" alt="DMDC"></div>
+        <div class="port-marquee-item"><img src="logos/dental care.png" alt="Dental Care"></div>
+        <div class="port-marquee-item"><img src="logos/Afid.png" alt="AFID"></div>
+        <div class="port-marquee-item"><img src="logos/Army medical college.png" alt="Army Medical College"></div>
+        <div class="port-marquee-item"><img src="logos/APSACS.png" alt="APSACS"></div>
         <div class="port-marquee-item"><img src="logos/uriis.png" alt="URIIS 2026"></div>
-        <div class="port-marquee-item"><img src="logos/kolaxus.png" alt="KolaXus"></div>
+        <div class="port-marquee-item"><img src="logos/kolaxus.png" alt="Kolaxus"></div>
       </div>
       <div class="port-marquee-set" aria-hidden="true">
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (7).jpeg" alt="University Malaya"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM.jpeg" alt="Drew Binsky"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (6).jpeg" alt="Canvas.savvy"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (4).jpeg" alt="DMDC"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (3).jpeg" alt="Dental Care"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (5).jpeg" alt="AFID"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (2).jpeg" alt="Army Medical College"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (1).jpeg" alt="APSACS"></div>
+        <div class="port-marquee-item"><img src="logos/University Malaya.png" alt="University Malaya"></div>
+        <div class="port-marquee-item"><img src="logos/Drew binsky.png" alt="Drew Binsky"></div>
+        <div class="port-marquee-item"><img src="logos/canvas savvy.png" alt="Canvas.savvy"></div>
+        <div class="port-marquee-item"><img src="logos/defence dental.png" alt="DMDC"></div>
+        <div class="port-marquee-item"><img src="logos/dental care.png" alt="Dental Care"></div>
+        <div class="port-marquee-item"><img src="logos/Afid.png" alt="AFID"></div>
+        <div class="port-marquee-item"><img src="logos/Army medical college.png" alt="Army Medical College"></div>
+        <div class="port-marquee-item"><img src="logos/APSACS.png" alt="APSACS"></div>
         <div class="port-marquee-item"><img src="logos/uriis.png" alt="URIIS 2026"></div>
-        <div class="port-marquee-item"><img src="logos/kolaxus.png" alt="KolaXus"></div>
+        <div class="port-marquee-item"><img src="logos/kolaxus.png" alt="Kolaxus"></div>
       </div>
       <div class="port-marquee-set" aria-hidden="true">
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (7).jpeg" alt="University Malaya"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM.jpeg" alt="Drew Binsky"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (6).jpeg" alt="Canvas.savvy"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (4).jpeg" alt="DMDC"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (3).jpeg" alt="Dental Care"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (5).jpeg" alt="AFID"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (2).jpeg" alt="Army Medical College"></div>
-        <div class="port-marquee-item"><img src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (1).jpeg" alt="APSACS"></div>
+        <div class="port-marquee-item"><img src="logos/University Malaya.png" alt="University Malaya"></div>
+        <div class="port-marquee-item"><img src="logos/Drew binsky.png" alt="Drew Binsky"></div>
+        <div class="port-marquee-item"><img src="logos/canvas savvy.png" alt="Canvas.savvy"></div>
+        <div class="port-marquee-item"><img src="logos/defence dental.png" alt="DMDC"></div>
+        <div class="port-marquee-item"><img src="logos/dental care.png" alt="Dental Care"></div>
+        <div class="port-marquee-item"><img src="logos/Afid.png" alt="AFID"></div>
+        <div class="port-marquee-item"><img src="logos/Army medical college.png" alt="Army Medical College"></div>
+        <div class="port-marquee-item"><img src="logos/APSACS.png" alt="APSACS"></div>
         <div class="port-marquee-item"><img src="logos/uriis.png" alt="URIIS 2026"></div>
-        <div class="port-marquee-item"><img src="logos/kolaxus.png" alt="KolaXus"></div>
+        <div class="port-marquee-item"><img src="logos/kolaxus.png" alt="Kolaxus"></div>
       </div>
     </div>
   </div>
@@ -1191,7 +1212,7 @@
     <div class="port-timeline">
 
       <div class="port-titem">
-        <img class="port-tlogo logo-wide" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (7).jpeg" alt="University Malaya">
+        <img class="port-tlogo" src="logos/University Malaya.png" alt="University Malaya">
         <div class="port-titem-body">
           <p class="port-tdate">May 2026 &ndash; Present</p>
           <p class="port-tname">Graduate Research Assistant</p>
@@ -1201,7 +1222,7 @@
       </div>
 
       <div class="port-titem">
-        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM.jpeg" alt="Drew Binsky">
+        <img class="port-tlogo" src="logos/Drew binsky.png" alt="Drew Binsky">
         <div class="port-titem-body">
           <p class="port-tdate">Jul 2025 &ndash; Oct 2025</p>
           <p class="port-tname">Freelance Collaborator</p>
@@ -1211,7 +1232,7 @@
       </div>
 
       <div class="port-titem">
-        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (6).jpeg" alt="Canvas.savvy">
+        <img class="port-tlogo" src="logos/canvas savvy.png" alt="Canvas.savvy">
         <div class="port-titem-body">
           <p class="port-tdate">Apr 2021 &ndash; Present</p>
           <p class="port-tname">Founder &amp; Owner</p>
@@ -1221,7 +1242,7 @@
       </div>
 
       <div class="port-titem">
-        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (4).jpeg" alt="Defence Dental Clinic">
+        <img class="port-tlogo" src="logos/defence dental.png" alt="Defence Dental Clinic">
         <div class="port-titem-body">
           <p class="port-tdate">Oct 2024 &ndash; Nov 2024</p>
           <p class="port-tname">General Dentist</p>
@@ -1231,7 +1252,7 @@
       </div>
 
       <div class="port-titem">
-        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (3).jpeg" alt="Dental Care">
+        <img class="port-tlogo" src="logos/dental care.png" alt="Dental Care">
         <div class="port-titem-body">
           <p class="port-tdate">Mar 2023 &ndash; Apr 2024</p>
           <p class="port-tname">General Dentist</p>
@@ -1241,7 +1262,7 @@
       </div>
 
       <div class="port-titem">
-        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (5).jpeg" alt="AFID">
+        <img class="port-tlogo" src="logos/Afid.png" alt="AFID">
         <div class="port-titem-body">
           <p class="port-tdate">Jan 2022 &ndash; Jan 2023</p>
           <p class="port-tname">House Officer</p>
@@ -1259,9 +1280,9 @@
     <div class="port-timeline">
 
       <div class="port-titem">
-        <img class="port-tlogo logo-wide" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (7).jpeg" alt="University Malaya">
+        <img class="port-tlogo" src="logos/University Malaya.png" alt="University Malaya">
         <div class="port-titem-body">
-          <p class="port-tdate">2025 &ndash; Present</p>
+          <p class="port-tdate">2026 &ndash; Present</p>
           <p class="port-tname">MDSC &mdash; Masters of Dental Science</p>
           <p class="port-torg">University Malaya (UM) &mdash; Kuala Lumpur, Malaysia</p>
           <p class="port-tdesc">Ongoing postgraduate research degree in dental science, deepening clinical expertise while continuing to grow as a creative professional in Malaysia.</p>
@@ -1269,7 +1290,7 @@
       </div>
 
       <div class="port-titem">
-        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (2).jpeg" alt="Army Medical College">
+        <img class="port-tlogo" src="logos/Army medical college.png" alt="Army Medical College">
         <div class="port-titem-body">
           <p class="port-tdate">2017 &ndash; 2021</p>
           <p class="port-tname">BDS &mdash; Bachelor of Dental Surgery</p>
@@ -1279,6 +1300,7 @@
       </div>
 
       <div class="port-titem">
+        <img class="port-tlogo" src="logos/photography and edit.png" alt="Photography &amp; Graphic Design">
         <div class="port-titem-body">
           <p class="port-tdate">Self-taught</p>
           <p class="port-tname">Photography &amp; Graphic Design</p>
@@ -1288,7 +1310,7 @@
       </div>
 
       <div class="port-titem">
-        <img class="port-tlogo" src="logos/WhatsApp Image 2026-10-01 at 5.09.03 PM (1).jpeg" alt="APSACS">
+        <img class="port-tlogo" src="logos/APSACS.png" alt="APSACS">
         <div class="port-titem-body">
           <p class="port-tdate">2005 &ndash; 2017</p>
           <p class="port-tname">School &amp; College</p>
@@ -1311,8 +1333,8 @@
         data-icon="🏆"
         data-type="Competition Award"
         data-title="URIIS 2026 — Consolation Prize"
-        data-desc="Competed in the Student Biz Innov Challenge at the University Research &amp; Innovation Investment Summit (URIIS 2026), held at the World Trade Centre, Kuala Lumpur, 21–23 September 2026. Among 82 participants, VAI Studio placed in the Top 10 and was awarded the Consolation Prize — a national recognition organised by KolaXus in collaboration with Malaysia's Ministry of Higher Education."
-        data-tags="Innovation,Entrepreneurship,Top 10,Consolation Prize,URIIS 2026,Malaysia,KolaXus"
+        data-desc="Competed in the Student Biz Innov Challenge at the University Research &amp; Innovation Investment Summit (URIIS 2026), held at the World Trade Centre, Kuala Lumpur, 21–23 September 2026. Among 82 participants, VAI Studio placed in the Top 10 and was awarded the Consolation Prize — a national recognition organised by Kolaxus in collaboration with Malaysia's Ministry of Higher Education."
+        data-tags="Innovation,Entrepreneurship,Top 10,Consolation Prize,URIIS 2026,Malaysia,Kolaxus"
         data-fit="cover"
         data-images="uriis/WhatsApp Image 2026-10-01 at 4.02.23 PM (1).jpeg|At URIIS 2026|uriis/WhatsApp Image 2026-10-01 at 4.02.23 PM.jpeg|Q&amp;A Session|uriis/uriis26-consolation-certificate.jpg|Consolation Prize|uriis/WhatsApp Image 2026-10-01 at 4.02.36 PM.jpeg|Certificate of Achievement">
         <span class="port-card-icon" style="font-size:2rem;opacity:.85">🏆</span>
@@ -1827,6 +1849,56 @@
       page.scrollTop = 0;
     }, 600);
   }
+
+  // Measure the visible (non-transparent) artwork in each marquee logo and
+  // hand its position to the CSS as ratios. See .port-marquee-item img.
+  (function fitMarqueeLogos() {
+    var MAX_ASPECT = 3.2;  // wider artwork is shrunk to this width:height
+    var cache = {};
+
+    function measure(img) {
+      var w = img.naturalWidth, h = img.naturalHeight;
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      var ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      var d = ctx.getImageData(0, 0, w, h).data;  // throws on file://
+      var top = h, bottom = -1, left = w, right = -1;
+      for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+          if (d[(y * w + x) * 4 + 3] > 20) {
+            if (y < top) top = y;
+            if (y > bottom) bottom = y;
+            if (x < left) left = x;
+            if (x > right) right = x;
+          }
+        }
+      }
+      if (bottom < 0) return null;
+      var inkW = right - left + 1, inkH = bottom - top + 1;
+      return {
+        k: Math.min(1, MAX_ASPECT / (inkW / inkH)),
+        iy: inkH / h,
+        pt: top / inkH, pb: (h - 1 - bottom) / inkH,
+        pl: left / inkH, pr: (w - 1 - right) / inkH
+      };
+    }
+
+    function apply(img) {
+      var src = img.currentSrc || img.src;
+      if (!(src in cache)) {
+        try { cache[src] = measure(img); } catch (e) { cache[src] = null; }
+      }
+      var m = cache[src];
+      if (!m) return;
+      for (var key in m) img.style.setProperty('--' + key, m[key]);
+    }
+
+    document.querySelectorAll('.port-marquee-item img').forEach(function (img) {
+      if (img.complete && img.naturalWidth) apply(img);
+      else img.addEventListener('load', function () { apply(img); });
+    });
+  })();
 </script>
 
 </body>
